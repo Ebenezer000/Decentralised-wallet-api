@@ -37,8 +37,9 @@ def create_wallet():
         'tron account': tron,
         'solana account': solana
     }
-   
-    return Response(json.dumps(wallet_json), 200, mimetype="application/json")
+
+    print(wallet_json)
+    return Response(json.dumps("True"), 200, mimetype="application/json")
 
 @app.route('/transfer_btc', methods=['POST'])
 def transfer_btc():
