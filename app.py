@@ -16,8 +16,8 @@ def create_wallet():
     # phone: str = body["user_id"]
     w = wallet.generate_mnemonic()
     wallet_tuple = HDWallet.from_mnemonic(w)
-
-    return wallet_tuple['seed']
+    print(w)
+    return w
 
 @app.route('/transfer_btc', methods=['POST'])
 def transfer_btc():

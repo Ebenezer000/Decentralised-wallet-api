@@ -3,3 +3,5 @@ flask
 zpywallet
 web3
 hexbytes
+solana
+tronpy
