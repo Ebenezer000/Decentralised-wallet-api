@@ -1,3 +1,4 @@
+import json
 from zpywallet import wallet
 from wallet.multichain_wallet import MultiChainWallet
 
@@ -12,7 +13,7 @@ if __name__ == '__main__':
     tron = multi_wallet.get_tron_account()
     solana = multi_wallet.get_solana_account()
     
-    wallet_json = {
+    wallet_json_dump = {
         'seed': seed,
         'bitcoin account': bitcoin,
         'eth account': eth,
@@ -20,4 +21,5 @@ if __name__ == '__main__':
         'solana account': solana
     }
 
+    wallet_json = json.dumps(wallet_json_dump, indent=4)
     print(wallet_json)

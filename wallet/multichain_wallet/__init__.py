@@ -41,7 +41,7 @@ class MultiChainWallet:
         account = bip44_wallet.Purpose().Coin().Account(account_index).Change(Bip44Changes.CHAIN_EXT).AddressIndex(0)
         private_key = account.PrivateKey().Raw().ToBytes()
         full_key = Account.from_key(private_key)  # Bitcoin address
-        return {"address": full_key.address, "private_key": full_key.key}
+        return {"address": full_key.address, "private_key": full_key.key.hex()}
     
 
     def get_tron_account(self, account_index: int = 0) -> dict:
@@ -75,7 +75,7 @@ class MultiChainWallet:
         account = bip44_wallet.Purpose().Coin().Account(account_index).Change(Bip44Changes.CHAIN_EXT).AddressIndex(0)
         total_key = account.PrivateKey().Raw().ToBytes()
         keypair_total = Keypair.from_seed(total_key)
-        return {"address": keypair_total.pubkey(), "private_key": keypair_total.secret()}
+        return {"address": str(keypair_total.pubkey()), "private_key": keypair_total.secret().hex()}
 
     def get_altcoin_account(self, coin: Bip44Coins, account_index: int = 0) -> dict:
         """
