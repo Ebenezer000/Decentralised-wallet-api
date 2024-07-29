@@ -52,10 +52,10 @@ class MultiChainWallet:
         Returns:
             Keypair: Solana Keypair object.
         """
-        # bip44_wallet = Bip44.FromSeed(self.seed, Bip44Coins.SOLANA)
-        # account = bip44_wallet.Purpose().Coin().Account(account_index).Change(Bip44Changes.CHAIN_EXT).AddressIndex(0)
-        # secret_key = account.PrivateKey().Raw().ToBytes()
-        return Keypair.from_seed(self.seed)
+        bip44_wallet = Bip44.FromSeed(self.seed, Bip44Coins.SOLANA)
+        account = bip44_wallet.Purpose().Coin().Account(account_index).Change(Bip44Changes.CHAIN_EXT).AddressIndex(0)
+        secret_key = account.PrivateKey().Raw().ToBytes()
+        return Keypair.from_seed(secret_key)
 
     def get_tron_account(self, account_index: int = 0) -> dict:
         """
