@@ -39,7 +39,7 @@ class MultiChainWallet:
         """
         bip44_wallet = Bip44.FromSeed(self.seed, Bip44Coins.ETHEREUM)
         account = bip44_wallet.Purpose().Coin().Account(account_index).Change(Bip44Changes.CHAIN_EXT).AddressIndex(0)
-        private_key = account.PrivateKey().Raw().ToHex()
+        private_key = account.PrivateKey().Raw().ToBytes()
         full_key = Account.from_key(private_key)  # Bitcoin address
         return {"address": full_key.address, "private_key": full_key.key}
     

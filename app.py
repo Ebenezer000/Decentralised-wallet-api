@@ -29,7 +29,7 @@ def create_wallet():
     tron = multi_wallet.get_tron_account()
     solana = multi_wallet.get_solana_account()
     
-    wallet_json = {
+    wallet = {
         'seed': seed,
         'bitcoin account': bitcoin,
         'eth account': eth,
@@ -37,7 +37,7 @@ def create_wallet():
         'solana account': solana
     }
 
-    print(wallet_json)
+    wallet_json = json.dumps(wallet, indent=4)
     return Response(json.dumps(wallet_json), 200, mimetype="application/json")
 
 @app.route('/transfer_btc', methods=['POST'])
