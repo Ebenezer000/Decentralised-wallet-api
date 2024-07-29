@@ -9,3 +9,4 @@ tronpy
 bip_utils
 bit
 blockcypher
+eth-account

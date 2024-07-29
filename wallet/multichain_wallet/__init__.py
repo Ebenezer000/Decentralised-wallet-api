@@ -1,6 +1,7 @@
 from bip_utils import Bip39SeedGenerator, Bip44, Bip44Coins, Bip44Changes
 from solders.keypair import Keypair
 from tronpy.keys import PrivateKey
+from eth_account import Account
 
 class MultiChainWallet:
     def __init__(self, mnemonic: str, passphrase: str = ""):
@@ -21,7 +22,7 @@ class MultiChainWallet:
         bip44_wallet = Bip44.FromSeed(self.seed, Bip44Coins.BITCOIN)
         account = bip44_wallet.Purpose().Coin().Account(account_index).Change(Bip44Changes.CHAIN_EXT).AddressIndex(0)
         private_key = account.PrivateKey().Raw().ToHex()
-        public_key = account.PublicKey().ToAddress()  # Bitcoin address
+        public_key = Account.from_key(private_key)  # Bitcoin address
         return {"address": public_key, "private_key": private_key}
 
 
@@ -38,8 +39,8 @@ class MultiChainWallet:
         bip44_wallet = Bip44.FromSeed(self.seed, Bip44Coins.ETHEREUM)
         account = bip44_wallet.Purpose().Coin().Account(account_index).Change(Bip44Changes.CHAIN_EXT).AddressIndex(0)
         private_key = account.PrivateKey().Raw().ToHex()
-        eth_account = account.from_key(private_key)
-        return {"address": eth_account.address, "private_key": private_key}
+
+        return {"address": account.PublicKey(), "private_key": private_key}
 
     def get_solana_account(self, account_index: int = 0) -> Keypair:
         """

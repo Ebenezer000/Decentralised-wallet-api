@@ -1,5 +1,5 @@
 import json
-from flask import Response, Flask, request
+from flask import Flask, request
 from zpywallet import wallet
 from wallet.multichain_wallet import MultiChainWallet
 
