@@ -10,11 +10,18 @@ app = Flask(__name__)
 def hello_world():
     return "Hello Welcome to Leeway Wallet"
 
+@app.route('/create_mnemonic', methods=['POST'])
+def create_mnemonic():
+    # body: tuple = request.json
+    # phone: str = body["user_id"]
+    seed = wallet.generate_mnemonic()
+    
+    return seed
 
 @app.route('/create_wallet', methods=['POST'])
 def create_wallet():
     # body: tuple = request.json
-    # phone: str = body["user_id"]
+    # seed: str = body["mnemonic"]
     seed = wallet.generate_mnemonic()
     multi_wallet = MultiChainWallet(seed)
 

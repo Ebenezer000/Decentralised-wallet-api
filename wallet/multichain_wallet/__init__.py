@@ -38,7 +38,7 @@ class MultiChainWallet:
         bip44_wallet = Bip44.FromSeed(self.seed, Bip44Coins.ETHEREUM)
         account = bip44_wallet.Purpose().Coin().Account(account_index).Change(Bip44Changes.CHAIN_EXT).AddressIndex(0)
         private_key = account.PrivateKey().Raw().ToHex()
-        eth_account = Account.from_key(private_key)
+        eth_account = account.from_key(private_key)
         return {"address": eth_account.address, "private_key": private_key}
 
     def get_solana_account(self, account_index: int = 0) -> Keypair:
