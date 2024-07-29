@@ -4,4 +4,8 @@ zpywallet
 web3
 hexbytes
 solana
+solders
 tronpy
+bip_utils
+bit
+blockcypher

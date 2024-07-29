@@ -1,7 +1,8 @@
 import json
 from flask import Response, Flask, request
 from zpywallet import wallet
-from zpywallet.utils.bip32 import HDWallet
+from wallet.multichain_wallet import MultiChainWallet
+
 
 app = Flask(__name__)
 
@@ -14,10 +15,24 @@ def hello_world():
 def create_wallet():
     # body: tuple = request.json
     # phone: str = body["user_id"]
-    w = wallet.generate_mnemonic()
-    wallet_tuple = HDWallet.from_mnemonic(w)
-    print(w)
-    return w
+    seed = wallet.generate_mnemonic()
+    multi_wallet = MultiChainWallet(seed)
+
+    bitcoin = multi_wallet.get_bitcoin_account()
+    eth = multi_wallet.get_eth_account()
+    tron = multi_wallet.get_tron_account()
+    solana = multi_wallet.get_solana_account()
+    
+    wallet_json = {
+        'seed': seed,
+        'bitcoin account': bitcoin,
+        'eth account': eth,
+        'tron account': tron,
+        'solana account': solana
+    }
+   
+
+    return wallet_json
 
 @app.route('/transfer_btc', methods=['POST'])
 def transfer_btc():
