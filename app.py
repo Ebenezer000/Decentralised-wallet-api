@@ -16,7 +16,7 @@ def create_mnemonic():
     # phone: str = body["user_id"]
     seed = wallet.generate_mnemonic()
     
-    return seed
+    return str(seed)
 
 @app.route('/create_wallet', methods=['POST'])
 def create_wallet():
