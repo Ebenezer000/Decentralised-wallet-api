@@ -1,11 +1,9 @@
 import json
 from flask import Response, Flask, request
-from flask_cors import CORS
 from zpywallet import wallet
 from zpywallet.utils.bip32 import Wallet
 
 app = Flask(__name__)
-CORS(app)
 
 @app.route('/')
 def hello_world():
