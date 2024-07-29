@@ -1,7 +1,7 @@
 import json
 from flask import Response, Flask, request
 from zpywallet import wallet
-from zpywallet.utils.bip32 import Wallet
+from zpywallet.utils.bip32 import HDWallet
 
 app = Flask(__name__)
 
@@ -15,7 +15,7 @@ def create_wallet():
     # body: tuple = request.json
     # phone: str = body["user_id"]
     w = wallet.generate_mnemonic()
-    wallet_tuple = Wallet.from_mnemonic(w)
+    wallet_tuple = HDWallet.from_mnemonic(w)
 
     return wallet_tuple['seed']
 

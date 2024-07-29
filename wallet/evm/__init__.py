@@ -22,3 +22,4 @@ def phrase_to_account(chain_provider, phrase) -> dict:
         "key": HexBytes.hex(acc.key),
     }
     return account
+
