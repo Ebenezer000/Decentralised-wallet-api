@@ -1,5 +1,5 @@
 import json
-from flask import Flask, request
+from flask import Response, Flask, request
 from zpywallet import wallet
 from wallet.multichain_wallet import MultiChainWallet
 
@@ -38,8 +38,7 @@ def create_wallet():
         'solana account': solana
     }
    
-
-    return wallet_json
+    return Response(json.dumps(wallet_json), 200, mimetype="application/json")
 
 @app.route('/transfer_btc', methods=['POST'])
 def transfer_btc():
