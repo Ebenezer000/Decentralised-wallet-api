@@ -25,16 +25,16 @@ def transfer_btc():
     phone: str = body["user_id"]
 
 @app.route('/transfer_eth', methods=['POST'])
-def transfer_btc():
+def transfer_eth():
     body: tuple = request.json
     phone: str = body["user_id"]
 
 @app.route('/transfer_solana', methods=['POST'])
-def transfer_btc():
+def transfer_solana():
     body: tuple = request.json
     phone: str = body["user_id"]
 
 @app.route('/transfer_tron', methods=['POST'])
-def transfer_btc():
+def transfer_tron():
     body: tuple = request.json
     phone: str = body["user_id"]
