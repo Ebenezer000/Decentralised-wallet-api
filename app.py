@@ -20,9 +20,8 @@ def create_mnemonic():
 
 @app.route('/create_wallet', methods=['POST'])
 def create_wallet():
-    # body: tuple = request.json
-    # seed: str = body["mnemonic"]
-    seed = wallet.generate_mnemonic()
+    body: tuple = request.json
+    seed: str = body["mnemonic"]
     multi_wallet = MultiChainWallet(seed)
 
     bitcoin = multi_wallet.get_bitcoin_account()
