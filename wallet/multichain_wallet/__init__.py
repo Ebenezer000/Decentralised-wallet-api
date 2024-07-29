@@ -71,7 +71,7 @@ class MultiChainWallet:
         account = bip44_wallet.Purpose().Coin().Account(account_index).Change(Bip44Changes.CHAIN_EXT).AddressIndex(0)
         private_key = account.PrivateKey().Raw().ToHex()
         tron_account = PrivateKey(bytes.fromhex(private_key))
-        return {"address": tron_account.address.base58, "private_key": private_key}
+        return {"address": tron_account.public_key, "private_key": private_key}
     
     def get_altcoin_account(self, coin: Bip44Coins, account_index: int = 0) -> dict:
         """
