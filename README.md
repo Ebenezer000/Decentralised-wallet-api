@@ -36,6 +36,31 @@ The library supports the following blockchains:
 - ETHEREUM (Bip44Coins.ETHEREUM)
 - ETHEREUM_CLASSIC (Bip44Coins.ETHEREUM_CLASSIC)
 - ETHEREUM_TESTNET (Bip44Coins.ETHEREUM_TESTNET)
+    - Ethereum (ETH)
+    - Binance Smart Chain (BSC)
+    - Avalanche C-Chain
+    - Polygon (Matic)
+    - Fantom (FTM)
+    - Arbitrum
+    - Optimism
+    - Moonbeam (on Polkadot)
+    - Cronos (Crypto.com Chain)
+    - Kovan Testnet
+    - Ropsten Testnet
+    - Rinkeby Testnet
+    - Goerli Testnet
+    - Celo
+    - Harmony One
+    - xDAI (Gnosis Chain)
+    - Huobi ECO Chain (HECO)
+    - OKExChain
+    - Klaytn
+    - TomoChain
+    - Velas
+    - IoTeX
+    - Aurora (on NEAR)
+    - Milkomeda (on Cardano)
+
 - FILECOIN (Bip44Coins.FILECOIN)
 - HARMONY_ONE (Bip44Coins.HARMONY_ONE)
 - HORIZEN (Bip44Coins.HORIZEN)

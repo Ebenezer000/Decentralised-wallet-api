@@ -2,7 +2,7 @@ import json
 from flask import Response, Flask, request
 from zpywallet import wallet
 from wallet.multichain_wallet import MultiChainWallet
-
+from bip_utils import Bip44Coins
 app = Flask(__name__)
 
 @app.route('/')
@@ -37,6 +37,38 @@ def create_wallet():
 
     wallet_json = json.dumps(wallet, indent=4)
     return Response(wallet_json, 200, mimetype="application/json")
+
+@app.route('/fetch_wallet', methods=['POST'])
+def fetch_wallet():
+    body: tuple = request.json
+    seed: str = body["mnemonic"]
+    chain: str = body["chain"]
+
+    multi_wallet = MultiChainWallet(seed)
+
+    wallet = multi_wallet.get_altcoin_account(coin = Bip44Coins(chain))
+    
+    wallet = {
+        'seed': seed,
+        'wallet': wallet
+    }
+
+    wallet_json = json.dumps(wallet, indent=4)
+    return Response(wallet_json, 200, mimetype="application/json")
+
+@app.route('/fetch_wallet', methods=['POST'])
+def fetch_price():
+    prices = {
+        'bitcoin': "",
+        'eth': "",
+        "tron": "",
+        "solana": ""
+    }
+
+    wallet_json = json.dumps(wallet, indent=4)
+    return Response(wallet_json, 200, mimetype="application/json")
+
+
 
 @app.route('/transfer_btc', methods=['POST'])
 def transfer_btc():
