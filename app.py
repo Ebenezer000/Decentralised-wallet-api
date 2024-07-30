@@ -36,7 +36,7 @@ def create_wallet():
     }
 
     wallet_json = json.dumps(wallet, indent=4)
-    return Response(json.dumps(wallet_json), 200, mimetype="application/json")
+    return Response(wallet_json, 200, mimetype="application/json")
 
 @app.route('/transfer_btc', methods=['POST'])
 def transfer_btc():
