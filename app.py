@@ -2,7 +2,7 @@ import json
 from flask import Response, Flask, request
 from zpywallet import wallet
 from wallet.multichain_wallet import MultiChainWallet
-
+from sdhs import turk
 
 app = Flask(__name__)
 
@@ -15,8 +15,8 @@ def create_mnemonic():
     # body: tuple = request.json
     # phone: str = body["user_id"]
     seed = wallet.generate_mnemonic()
-    
-    return str(seed)
+    turk  = sde
+    return seed
 
 @app.route('/create_wallet', methods=['POST'])
 def create_wallet():
