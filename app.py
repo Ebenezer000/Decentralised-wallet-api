@@ -89,10 +89,10 @@ def fetch_price():
 
         # Extract prices and store in the prices dictionary with the desired format
         prices = {
-            'Bitcoin': f"$ {data['bitcoin']['usd']}",
-            'Eth': f"$ {data['ethereum']['usd']}",
-            'Tron': f"$ {data['tron']['usd']}",
-            'Solana': f"$ {data['solana']['usd']}"
+            'Bitcoin': f"${data['bitcoin']['usd']}",
+            'Eth': f"${data['ethereum']['usd']}",
+            'Tron': f"${data['tron']['usd']}",
+            'Solana': f"${data['solana']['usd']}"
         }
         if prices:
             return prices
