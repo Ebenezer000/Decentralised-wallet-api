@@ -1,20 +1,159 @@
-# MultiChain Wallet Library
+## Postman Documentation for Leeway Wallet API
+# Base URL
+    ```
+    https://leeway-wallet-api.onrender.com/
 
-The MultiChain Wallet Library provides a unified interface for generating, managing, and transacting with wallets across multiple blockchains using a single mnemonic phrase. It supports popular cryptocurrencies such as Bitcoin, Ethereum, Solana, and many others.
+    ```
+## Endpoints
 
-## Features
+1. GET /
+    Description: Welcome message.
 
-- Generate wallets and derive private keys for multiple blockchains using a single mnemonic.
-- Transfer cryptocurrency across supported blockchains.
-- Sign and broadcast transactions securely.
+    Request:
 
-## Installation
+    Method: GET 
+    URL: /
+    Response:
 
-To use the MultiChain Wallet Library, you'll need to install the following dependencies:
+    ```
+    Body: "Hello Welcome to Leeway Wallet"
+    ```
 
-pip install bip-utils solana tronpy eth-account bit blockcypher
+2. POST /create_mnemonic
+    Description: Generate a new mnemonic seed phrase.
 
-## Supported Chains
+    Request:
+
+    Method: POST
+    URL: /create_mnemonic
+    Response:
+
+    Body:
+    ```json
+        {
+        "mnemonic": "seed phrase"
+        }
+    ```
+
+3. POST /create_wallet
+    Description: Create wallets for Bitcoin, Ethereum, Tron, and Solana using a mnemonic seed phrase.
+
+    Request:
+
+    Method: POST
+    URL: /create_wallet
+    Body:
+    ```json
+        {
+        "mnemonic": "your mnemonic phrase here"
+        }
+    ```
+    Response:
+    Body:
+    ```json
+    {
+        "seed": "your mnemonic phrase",
+        "bitcoin account": {
+            "address": "bitcoin address",
+            "private_key": "bitcoin private key"
+        },
+        "eth account": {
+            "address": "ethereum address",
+            "private_key": "ethereum private key"
+        },
+        "tron account": {
+            "address": "tron address",
+            "private_key": "tron private key"
+        },
+        "solana account": {
+            "address": "solana address",
+            "public_key": "solana public key",
+            "private_key": "solana private key"
+        }
+    }
+    ```
+
+4. POST /fetch_wallet
+    Description: Fetch a wallet for a specific chain using the mnemonic seed phrase.
+
+    Request:
+
+    Method: POST
+    URL: /fetch_wallet
+    Body:
+    ```json
+        {
+        "mnemonic": "your mnemonic phrase here",
+        "chain": "chain name (e.g., BITCOIN, ETHEREUM, etc.)"
+        }
+    ```
+
+    Response:
+    Body:
+    ```json
+    
+    {
+        "seed": "your mnemonic phrase",
+        "wallet": {
+            "address": "wallet address",
+            "private_key": "wallet private key"
+        }
+    }
+    ```
+
+5. POST /fetch_price
+    Description: Fetch current prices of supported cryptocurrencies.
+
+    Request:
+    Method: POST
+    URL: /fetch_price
+    Response:
+
+    Body:
+    ```json
+    {
+        "bitcoin": "current price in USD",
+        "eth": "current price in USD",
+        "tron": "current price in USD",
+        "solana": "current price in USD"
+    }
+    ```
+6. POST /transfer_btc
+    Description: Transfer Bitcoin to another address.
+    Request:
+
+    Method: POST
+    URL: /transfer_btc
+    Body:
+    ``` json
+        {
+        "user_id": "your_user_id",
+        "recipient_address": "recipient bitcoin address",
+        "amount": "amount of BTC"
+        }
+    ```
+    Response:
+
+    Body: Transaction details (not implemented yet).
+7. POST /transfer_eth
+    Description: Transfer Ethereum to another address.
+    Request:
+
+    Method: POST
+    URL: /transfer_eth
+    Body:
+    ``` json
+        {
+            "user_id": "your_user_id",
+            "recipient_address": "recipient ethereum address",
+            "amount": "amount of ETH"
+        }
+    ```
+    Response:
+
+    Body: Transaction details (not implemented yet).
+
+    ## Supported Chains
 
 The library supports the following blockchains:
 
@@ -91,13 +230,6 @@ Security
 - Seed Phrase: Your mnemonic phrase should be stored securely and never shared.
 - Testing: Use testnets for testing purposes to avoid potential losses.
 
-License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-Contributing
-
-Contributions are welcome! Please fork the repository and create a pull request with your changes.
 
 Acknowledgments
 

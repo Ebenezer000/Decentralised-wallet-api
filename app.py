@@ -1,8 +1,12 @@
 import json
+import requests
 from flask import Response, Flask, request
 from zpywallet import wallet
 from wallet.multichain_wallet import MultiChainWallet
+from wallet.multichain_wallet.chain import chains
 from bip_utils import Bip44Coins
+
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -45,8 +49,8 @@ def fetch_wallet():
     chain: str = body["chain"]
 
     multi_wallet = MultiChainWallet(seed)
-
-    wallet = multi_wallet.get_altcoin_account(coin = Bip44Coins(chain))
+    coin_type = chains['chain']['coin']
+    wallet = multi_wallet.get_altcoin_account(coin_type)
     
     wallet = {
         'seed': seed,
@@ -56,18 +60,41 @@ def fetch_wallet():
     wallet_json = json.dumps(wallet, indent=4)
     return Response(wallet_json, 200, mimetype="application/json")
 
-@app.route('/fetch_wallet', methods=['POST'])
+@app.route('/fetch_price', methods=['POST'])
 def fetch_price():
-    prices = {
-        'bitcoin': "",
-        'eth': "",
-        "tron": "",
-        "solana": ""
+
+    # Define the cryptocurrencies and their CoinGecko IDs
+    cryptos = {
+        'bitcoin': 'bitcoin',
+        'eth': 'ethereum',
+        'tron': 'tron',
+        'solana': 'solana'
     }
 
-    wallet_json = json.dumps(wallet, indent=4)
-    return Response(wallet_json, 200, mimetype="application/json")
+    # Base URL for CoinGecko API
+    base_url = "https://api.coingecko.com/api/v3/simple/price"
 
+    # Prepare the query parameters
+    ids = ",".join(cryptos.values())
+    params = {
+        'ids': ids,
+        'vs_currencies': 'usd'
+    }
+
+    try:
+        # Send a GET request to the API
+        response = requests.get(base_url, params=params)
+        response.raise_for_status()  # Raise an error if the request failed
+        data = response.json()
+
+        # Extract prices and store in the prices dictionary
+        prices = {name: data[cryptos[name]]['usd'] for name in cryptos}
+        return Response(prices, 200, mimetype="application/json")
+
+    except requests.exceptions.HTTPError as http_err:
+        print(f"HTTP error occurred: {http_err}")
+    except Exception as err:
+        print(f"An error occurred: {err}")
 
 
 @app.route('/transfer_btc', methods=['POST'])
