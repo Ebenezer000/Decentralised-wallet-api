@@ -49,7 +49,7 @@ def fetch_wallet():
     chain: str = body["chain"]
 
     multi_wallet = MultiChainWallet(seed)
-    coin_type = chains['chain']['coin']
+    coin_type = chains[chain]['coin']
     wallet = multi_wallet.get_altcoin_account(coin_type)
     
     wallet = {

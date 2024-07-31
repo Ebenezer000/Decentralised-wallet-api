@@ -1,25 +1,23 @@
 import json
 from zpywallet import wallet
 from wallet.multichain_wallet import MultiChainWallet
+from wallet.multichain_wallet.chain import chains
+
 
 if __name__ == '__main__':
-    # body: tuple = request.json
-    # seed: str = body["mnemonic"]
-    seed = wallet.generate_mnemonic()
-    multi_wallet = MultiChainWallet(seed)
 
-    bitcoin = multi_wallet.get_bitcoin_account()
-    eth = multi_wallet.get_eth_account()
-    tron = multi_wallet.get_tron_account()
-    solana = multi_wallet.get_solana_account()
+    seed: str = "million crush leave asthma slush margin okay tornado spawn intact ranch often"
+    chain: str = "LITECOIN"
+    # "mnemonic": "million crush leave asthma slush margin okay tornado spawn intact ranch often",
+    # "chain": "LITECOIN"
+    multi_wallet = MultiChainWallet(seed)
+    coin_type = chains[chain]['coin']
+    wallet = multi_wallet.get_altcoin_account(coin_type)
     
-    wallet_json_dump = {
+    wallet = {
         'seed': seed,
-        'bitcoin account': bitcoin,
-        'eth account': eth,
-        'tron account': tron,
-        'solana account': solana
+        'wallet': wallet
     }
 
-    wallet_json = json.dumps(wallet_json_dump, indent=4)
+    wallet_json = json.dumps(wallet, indent=4)
     print(wallet_json)
