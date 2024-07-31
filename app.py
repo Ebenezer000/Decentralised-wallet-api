@@ -94,8 +94,10 @@ def fetch_price():
             'Tron': f"$ {data['tron']['usd']}",
             'Solana': f"$ {data['solana']['usd']}"
         }
-        
-        return Response(prices, 200, mimetype="application/json")
+        if prices:
+            return prices
+        else:
+            return "Failed"
 
     except requests.exceptions.HTTPError as http_err:
         print(f"HTTP error occurred: {http_err}")
