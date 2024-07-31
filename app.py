@@ -87,8 +87,13 @@ def fetch_price():
         response.raise_for_status()  # Raise an error if the request failed
         data = response.json()
 
-        # Extract prices and store in the prices dictionary
-        prices = {name: data[cryptos[name]]['usd'] for name in cryptos}
+        # Extract prices and store in the prices dictionary with the desired format
+        prices = {
+            'Bitcoin': data['bitcoin']['usd'],
+            'Eth': data['ethereum']['usd'],
+            'Tron': data['tron']['usd'],
+            'Solana': data['solana']['usd']
+        }
         return Response(prices, 200, mimetype="application/json")
 
     except requests.exceptions.HTTPError as http_err:

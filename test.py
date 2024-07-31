@@ -1,23 +1,50 @@
-import json
-from zpywallet import wallet
-from wallet.multichain_wallet import MultiChainWallet
-from wallet.multichain_wallet.chain import chains
+import requests
 
-
-if __name__ == '__main__':
-
-    seed: str = "million crush leave asthma slush margin okay tornado spawn intact ranch often"
-    chain: str = "LITECOIN"
-    # "mnemonic": "million crush leave asthma slush margin okay tornado spawn intact ranch often",
-    # "chain": "LITECOIN"
-    multi_wallet = MultiChainWallet(seed)
-    coin_type = chains[chain]['coin']
-    wallet = multi_wallet.get_altcoin_account(coin_type)
-    
-    wallet = {
-        'seed': seed,
-        'wallet': wallet
+def get_crypto_prices():
+    # Define the cryptocurrencies and their CoinGecko IDs
+    cryptos = {
+        'bitcoin': 'bitcoin',
+        'eth': 'ethereum',
+        'tron': 'tron',
+        'solana': 'solana'
     }
 
-    wallet_json = json.dumps(wallet, indent=4)
-    print(wallet_json)
+    # Base URL for CoinGecko API
+    base_url = "https://api.coingecko.com/api/v3/simple/price"
+
+    # Prepare the query parameters
+    ids = ",".join(cryptos.values())
+    params = {
+        'ids': ids,
+        'vs_currencies': 'usd'
+    }
+
+    try:
+        # Send a GET request to the API
+        response = requests.get(base_url, params=params)
+        response.raise_for_status()  # Raise an error if the request failed
+        data = response.json()
+
+        # Extract prices and store in the prices dictionary with the desired format
+        prices = {
+            'Bitcoin': data['bitcoin']['usd'],
+            'Eth': data['ethereum']['usd'],
+            'Tron': data['tron']['usd'],
+            'Solana': data['solana']['usd']
+        }
+        return prices
+
+    except requests.exceptions.HTTPError as http_err:
+        print(f"HTTP error occurred: {http_err}")
+    except Exception as err:
+        print(f"An error occurred: {err}")
+
+    return None
+
+# Example usage
+if __name__ == "__main__":
+    prices = get_crypto_prices()
+    if prices:
+        print (prices)
+    else:
+        print("Failed to retrieve prices.")
