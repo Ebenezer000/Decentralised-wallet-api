@@ -27,10 +27,10 @@ def get_crypto_prices():
 
         # Extract prices and store in the prices dictionary with the desired format
         prices = {
-            'Bitcoin': data['bitcoin']['usd'],
-            'Eth': data['ethereum']['usd'],
-            'Tron': data['tron']['usd'],
-            'Solana': data['solana']['usd']
+            'Bitcoin': f"$ {data['bitcoin']['usd']}",
+            'Eth': f"$ {data['ethereum']['usd']}",
+            'Tron': f"$ {data['tron']['usd']}",
+            'Solana': f"$ {data['solana']['usd']}"
         }
         return prices
 
@@ -45,6 +45,7 @@ def get_crypto_prices():
 if __name__ == "__main__":
     prices = get_crypto_prices()
     if prices:
-        print (prices)
+        print("Current cryptocurrency prices (in USD):")
+        print(prices)
     else:
         print("Failed to retrieve prices.")

@@ -89,11 +89,12 @@ def fetch_price():
 
         # Extract prices and store in the prices dictionary with the desired format
         prices = {
-            'Bitcoin': data['bitcoin']['usd'],
-            'Eth': data['ethereum']['usd'],
-            'Tron': data['tron']['usd'],
-            'Solana': data['solana']['usd']
+            'Bitcoin': f"$ {data['bitcoin']['usd']}",
+            'Eth': f"$ {data['ethereum']['usd']}",
+            'Tron': f"$ {data['tron']['usd']}",
+            'Solana': f"$ {data['solana']['usd']}"
         }
+        
         return Response(prices, 200, mimetype="application/json")
 
     except requests.exceptions.HTTPError as http_err:
