@@ -12,24 +12,56 @@ The Leeway Wallet supports the following blockchains:
 - BITCOIN_TESTNET (Bip44Coins.BITCOIN_TESTNET)
 - CARDANO_ICARUS (Bip44Coins.CARDANO_ICARUS)
 - CARDANO_LEDGER (Bip44Coins.CARDANO_LEDGER)
+- CHAINLINK (Bip44Coins.CHAINLINK)
 - COSMOS (Bip44Coins.COSMOS)
 - DASH (Bip44Coins.DASH)
 - DOGECOIN (Bip44Coins.DOGECOIN)
 - ELROND (Bip44Coins.ELROND)
 - ETHEREUM (Bip44Coins.ETHEREUM)
 - ETHEREUM_CLASSIC (Bip44Coins.ETHEREUM_CLASSIC)
+- ETHEREUM_TESTNET (Bip44Coins.ETHEREUM_TESTNET)
+    - Ethereum (ETH)
+    - Binance Smart Chain (BSC)
+    - Avalanche C-Chain
+    - Polygon (Matic)
+    - Fantom (FTM)
+    - Arbitrum
+    - Optimism
+    - Moonbeam (on Polkadot)
+    - Cronos (Crypto.com Chain)
+    - Kovan Testnet
+    - Ropsten Testnet
+    - Rinkeby Testnet
+    - Goerli Testnet
+    - Celo
+    - Harmony One
+    - xDAI (Gnosis Chain)
+    - Huobi ECO Chain (HECO)
+    - OKExChain
+    - Klaytn
+    - TomoChain
+    - Velas
+    - IoTeX
+    - Aurora (on NEAR)
+    - Milkomeda (on Cardano)
+
 - FILECOIN (Bip44Coins.FILECOIN)
 - HARMONY_ONE (Bip44Coins.HARMONY_ONE)
+- HORIZEN (Bip44Coins.HORIZEN)
 - KUSAMA (Bip44Coins.KUSAMA)
 - LITECOIN (Bip44Coins.LITECOIN)
 - MONERO (Bip44Coins.MONERO)
 - NANO (Bip44Coins.NANO)
 - NEO (Bip44Coins.NEO)
+- NEO3 (Bip44Coins.NEO3)
+- NULS (Bip44Coins.NULS)
+- NULS2 (Bip44Coins.NULS2)
 - POLKADOT (Bip44Coins.POLKADOT)
 - RIPPLE (Bip44Coins.RIPPLE)
 - SOLANA (Bip44Coins.SOLANA)
 - STELLAR (Bip44Coins.STELLAR)
 - TERRA (Bip44Coins.TERRA)
+- TERRA_CLASSIC (Bip44Coins.TERRA_CLASSIC)
 - TEZOS (Bip44Coins.TEZOS)
 - THETA (Bip44Coins.THETA)
 - TRON (Bip44Coins.TRON)

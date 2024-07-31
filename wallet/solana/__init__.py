@@ -5,7 +5,7 @@ from solders.system_program import TransferParams, transfer
 from solana.rpc.commitment import Confirmed
 from solders.pubkey import Pubkey
 
-def transfer_sol(client: Client, sender: Keypair, recipient_address: str, amount_sol: float) -> str:
+def transfer_sol(client: Client, seed: str, recipient_address: str, amount_sol: float) -> str:
     """
     Transfer SOL from one account to another.
 
@@ -18,6 +18,7 @@ def transfer_sol(client: Client, sender: Keypair, recipient_address: str, amount
     Returns:
         str: Transaction signature.
     """
+    sender = Keypair.from_seed(seed)
     recipient_pubkey = Pubkey(recipient_address)
     amount_lamports = int(amount_sol * 1_000_000_000)  # 1 SOL = 1 billion lamports
     txn = Transaction().add(transfer(TransferParams(from_pubkey=sender.pubkey, to_pubkey=recipient_pubkey, lamports=amount_lamports)))
@@ -25,7 +26,7 @@ def transfer_sol(client: Client, sender: Keypair, recipient_address: str, amount
     return txn_signature["result"]
 
 
-def sign_message(sender: Keypair, message: str) -> bytes:
+def sign_message(seed: str, message: str) -> bytes:
     """
     Sign a message with the sender's private key.
 
@@ -36,5 +37,6 @@ def sign_message(sender: Keypair, message: str) -> bytes:
     Returns:
         bytes: Signed message.
     """
+    sender = Keypair.from_seed(seed)
     message_bytes = message.encode('utf-8')
     return sender.sign(message_bytes)

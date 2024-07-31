@@ -49,16 +49,19 @@ def fetch_wallet():
     chain: str = body["chain"]
 
     multi_wallet = MultiChainWallet(seed)
-    coin_type = chains[chain]['coin']
-    wallet = multi_wallet.get_altcoin_account(coin_type)
-    
-    wallet = {
-        'seed': seed,
-        'wallet': wallet
-    }
+    try: 
+        coin_type = chains[chain]['coin']
+        wallet = multi_wallet.get_altcoin_account(coin_type)
+        
+        wallet = {
+            'seed': seed,
+            'wallet': wallet
+        }
 
-    wallet_json = json.dumps(wallet, indent=4)
-    return Response(wallet_json, 200, mimetype="application/json")
+        wallet_json = json.dumps(wallet, indent=4)
+        return Response(wallet_json, 200, mimetype="application/json")
+    except:
+        return "This Coin is Currently Unavailable Please try again"
 
 @app.route('/fetch_price', methods=['POST'])
 def fetch_price():
