@@ -2,6 +2,15 @@ from tronpy import Tron
 from tronpy.keys import PrivateKey
 from tronpy.providers import HTTPProvider
 
+def phrase_to_tron_account(seed: str):
+    tron_w3 = Tron(HTTPProvider('https://api.trongrid.io'))
+    tron_account = tron_w3.generate_address_from_mnemonic(mnemonic=seed)
+    account = {
+        "address": tron_account['base58check_address'],
+        "private_key": tron_account['private_key']
+    }
+
+    return account
 
 def transfer_trx(client: Tron, account: dict, to_address: str, amount_trx: float) -> str:
     """
@@ -23,7 +32,8 @@ def transfer_trx(client: Tron, account: dict, to_address: str, amount_trx: float
         .build()
         .sign(sender)
     )
-    tx_id = txn.broadcast().wait().txid
+    tx_id = txn.broadcast().wait()["id"]
+
     return tx_id
 
 def transfer_token(client: Tron, account: dict, token_id: int, to_address: str, amount: int) -> str:

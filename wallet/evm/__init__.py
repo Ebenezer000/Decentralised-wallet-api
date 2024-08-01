@@ -23,7 +23,7 @@ def phrase_to_account(chain_provider, phrase) -> dict:
     }
     return account
 
-def transfer_eth(chain_provider, account, to_address, amount_ether, gas=21000, gas_price=None):
+def transfer_eth(chain_provider, explorer, account, to_address, amount_ether, gas=21000, gas_price=None):
     """
     Transfer Ether from one account to another.
     
@@ -49,10 +49,17 @@ def transfer_eth(chain_provider, account, to_address, amount_ether, gas=21000, g
         'nonce': nonce
     }
     signed_txn = w3.eth.account.sign_transaction(transaction, private_key=account['key'])
-    tx_hash = w3.eth.send_raw_transaction(signed_txn.rawTransaction)
-    return tx_hash.hex()
+    raw_hash = w3.eth.send_raw_transaction(signed_txn.rawTransaction)
+    tx_hash = raw_hash.hex()
+    explore_link = f"{explorer}/tx/{tx_hash}"
+    complete_transaction = {
+        "transaction_state": "COMPLETED",
+        "transaction_hash": tx_hash,
+        "transaction_link": explore_link
+    }
+    return complete_transaction
 
-def transfer_token(chain_provider, account, to_address, token_contract_address, amount, gas=60000, gas_price=None):
+def transfer_token(chain_provider, explorer, account, to_address, token_contract_address, amount, gas=60000, gas_price=None):
     """
     Transfer ERC-20 tokens from one account to another.
     
@@ -78,8 +85,39 @@ def transfer_token(chain_provider, account, to_address, token_contract_address, 
         'nonce': nonce
     })
     signed_txn = w3.eth.account.sign_transaction(transaction, private_key=account['key'])
-    tx_hash = w3.eth.send_raw_transaction(signed_txn.rawTransaction)
-    return tx_hash.hex()
+    raw_hash = w3.eth.send_raw_transaction(signed_txn.rawTransaction)
+    tx_hash = raw_hash.hex()
+    explore_link = f"{explorer}/tx/{tx_hash}"
+    complete_transaction = {
+        "transaction_state": "COMPLETED",
+        "transaction_hash": tx_hash,
+        "transaction_link": explore_link
+    }
+    return complete_transaction
+
+def import_token(chain_provider, token_address, owner_address ):
+    """
+    Function to retieve details of erc20 token
+    Args:
+        chain[str]: Name of current chain
+        token[str]: Address of current token
+    Returns:
+        dict: details of token       
+    """
+    w3 =  Web3(Web3.HTTPProvider(chain_provider))
+    token_contract = w3.eth.contract(Web3.to_checksum_address(token_address), abi= ERC20_ABI)
+    token_name = token_contract.caller.name()
+    token_symbol = token_contract.caller.symbol()
+    token_decimal = token_contract.caller.decimals()
+    user_balance = token_contract.caller.balanceOf(owner_address)
+    token = {
+        "name": token_name,
+        "symbol": token_symbol,
+        "decimal": token_decimal,
+        "balance": user_balance
+    }
+
+    return token
 
 
 def interact_contract(chain_provider, account, contract_address, contract_abi, function_name, *args, gas=200000, gas_price=None):
@@ -115,7 +153,6 @@ def interact_contract(chain_provider, account, contract_address, contract_abi, f
     signed_txn = w3.eth.account.sign_transaction(transaction, private_key=account['key'])
     tx_hash = w3.eth.send_raw_transaction(signed_txn.rawTransaction)
     return tx_hash.hex()
-
 
 def sign_message(chain_provider, account, message):
     """

@@ -4,7 +4,7 @@
     https://leeway-wallet-api.onrender.com/
 
     ```
-## Endpoints
+## URLs
 
 1. GET /
     Description: Welcome message.
@@ -118,40 +118,176 @@
         "solana": "current price in USD"
     }
     ```
-6. POST /transfer_btc
-    Description: Transfer Bitcoin to another address.
-    Request:
+6. Transfer EVM
+    Description: Transfer EVM Coins.
 
+    URL: /transfer_evm
     Method: POST
-    URL: /transfer_btc
-    Body:
-    ``` json
-        {
-        "user_id": "your_user_id",
-        "recipient_address": "recipient bitcoin address",
-        "amount": "amount of BTC"
-        }
+
+    Request Body:
+
+    ```json
+    
+    {
+        "seed": "string",              // The seed phrase to derive the account.
+        "recipient": "string",         // The recipient's address.
+        "amount": "string",            // The amount to transfer.
+        "rpc_provider": "string",      // The RPC provider URL.
+        "explorer_url": "string"       // The blockchain explorer URL.
+    }
     ```
+
     Response:
 
-    Body: Transaction details (not implemented yet).
-7. POST /transfer_eth
-    Description: Transfer Ethereum to another address.
-    Request:
+    ```json
+    
+    {
+        "transaction_state": "string", // Transaction state (e.g., "COMPLETED").
+        "transaction_hash": "string",  // Transaction hash.
+        "transaction_link": "string"   // Link to the transaction on the explorer.
+    }
 
-    Method: POST
-    URL: /transfer_eth
-    Body:
-    ``` json
-        {
-            "user_id": "your_user_id",
-            "recipient_address": "recipient ethereum address",
-            "amount": "amount of ETH"
-        }
     ```
+
+7. Transfer Token EVM
+
+    Description: Transfer EVM Tokens.
+    URL: /transfer_token_evm
+    Method: POST
+
+    Request Body:
+
+    ```json
+    
+    {
+        "seed": "string",              // The seed phrase to derive the account.
+        "recipient": "string",         // The recipient's address.
+        "amount": "string",            // The amount of tokens to transfer.
+        "token_address": "string",     // The address of the token contract.
+        "rpc_provider": "string",      // The RPC provider URL.
+        "explorer_url": "string"       // The blockchain explorer URL.
+    }
+    ```
+
     Response:
 
-    Body: Transaction details (not implemented yet).
+    ```json
+    
+    {
+        "transaction_state": "string", // Transaction state (e.g., "COMPLETED").
+        "transaction_hash": "string",  // Transaction hash.
+        "transaction_link": "string"   // Link to the transaction on the explorer.
+    }
+    ```
+
+8. Import Token EVM
+    Description: Import and get EVM token details.
+    URL: /import_token_evm
+    Method: POST
+
+    Request Body:
+
+    ```json
+
+    {
+        "rpc_provider": "string",      // The RPC provider URL.
+        "user_address": "string",      // The user's address.
+        "token_address": "string"      // The address of the token contract.
+    }
+    ```
+    
+    Response:
+
+    ```json
+
+    {
+        "name": "string",              // Token name.
+        "symbol": "string",            // Token symbol.
+        "decimals": "integer",         // Token decimals.
+        "balance": "string"            // Total Token Balance of User
+    }
+    ```
+
+9. Transfer BTC Altcoins
+
+    Description: Transfer coins on BTC and adjacent chains
+    URL: /transfer_btc_alts
+    Method: POST
+
+    Request Body:
+
+    ```json
+
+    {
+        "seed": "string",              // The seed phrase to derive the account.
+        "chain": "string",             // The blockchain name (e.g., "BITCOIN", "LITECOIN").
+        "recipient": "string",         // The recipient's address.
+        "amount": "string"             // The amount to transfer.
+    }
+    ```
+
+    Response:
+    ```json
+
+    {
+        "transaction_state": "string", // Transaction state (e.g., "COMPLETED").
+        "transaction_hash": "string"   // Transaction hash.
+    }
+    ```
+
+10. Transfer Solana
+
+    Description: Transfer Solana SOL
+    URL: /transfer_solana
+    Method: POST
+
+    Request Body:
+
+    ```json
+
+    {
+        "seed": "string",              // The seed phrase to derive the account.
+        "recipient": "string",         // The recipient's address.
+        "amount": "string"             // The amount of SOL to transfer.
+    }
+    ```
+
+    Response:
+
+    ```json
+
+    {
+        "transaction_state": "string", // Transaction state (e.g., "COMPLETED").
+        "transaction_hash": "string",  // Transaction hash.
+        "transaction_link": "string"   // Link to the transaction on the explorer.
+    }
+
+11. Transfer TRON
+
+    Description: Transfer TRON TRX
+    URL: /transfer_tron
+    Method: POST
+
+    Request Body:
+
+    ```json
+
+    {
+    "seed": "string",              // The seed phrase to derive the account.
+    "recipient": "string",         // The recipient's address.
+    "amount": "string"             // The amount of TRX to transfer.
+    }
+    ```
+
+    Response:
+
+    ```json
+    {
+    "transaction_state": "string", // Transaction state (e.g., "COMPLETED").
+    "transaction_hash": "string",  // Transaction hash.
+    "transaction_link": "string"   // Link to the transaction on the explorer.
+    }
+    ```
 
     ## Supported Chains
 

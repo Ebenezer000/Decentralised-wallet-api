@@ -47,5 +47,6 @@ if __name__ == "__main__":
     if prices:
         print("Current cryptocurrency prices (in USD):")
         print(prices)
+        print("GOT THIS FROM THE RIGHT FOLDER")
     else:
         print("Failed to retrieve prices.")

@@ -5,7 +5,7 @@ from solders.system_program import TransferParams, transfer
 from solana.rpc.commitment import Confirmed
 from solders.pubkey import Pubkey
 
-def transfer_sol(client: Client, seed: str, recipient_address: str, amount_sol: float) -> str:
+def transfer_sol(seed: str, recipient_address: str, amount_sol: float) -> str:
     """
     Transfer SOL from one account to another.
 
@@ -18,6 +18,7 @@ def transfer_sol(client: Client, seed: str, recipient_address: str, amount_sol: 
     Returns:
         str: Transaction signature.
     """
+    client = Client("https://api.mainnet-beta.solana.com")
     sender = Keypair.from_seed(seed)
     recipient_pubkey = Pubkey(recipient_address)
     amount_lamports = int(amount_sol * 1_000_000_000)  # 1 SOL = 1 billion lamports
