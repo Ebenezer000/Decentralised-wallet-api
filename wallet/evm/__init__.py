@@ -1,7 +1,7 @@
 from web3 import Web3
 from hexbytes import HexBytes
 from web3.middleware import construct_sign_and_send_raw_middleware
-from abi import token_abi as ERC20_ABI
+from abi import token_abi
 
 def phrase_to_account(chain_provider, phrase) -> dict:
     """
@@ -76,7 +76,7 @@ def transfer_token(chain_provider, explorer, account, to_address, token_contract
         str: Transaction hash.
     """
     w3 = Web3(Web3.HTTPProvider(f'{chain_provider}'))
-    token_contract = w3.eth.contract(address=token_contract_address, abi=ERC20_ABI)
+    token_contract = w3.eth.contract(address=token_contract_address, abi=token_abi)
     nonce = w3.eth.get_transaction_count(account["address"])
     gas_price = gas_price or w3.eth.gas_price
     transaction = token_contract.functions.transfer(to_address, amount).build_transaction({
@@ -105,7 +105,7 @@ def import_token(chain_provider, token_address, owner_address ):
         dict: details of token       
     """
     w3 =  Web3(Web3.HTTPProvider(chain_provider))
-    token_contract = w3.eth.contract(Web3.to_checksum_address(token_address), abi= ERC20_ABI)
+    token_contract = w3.eth.contract(Web3.to_checksum_address(token_address), abi= token_abi)
     token_name = token_contract.caller.name()
     token_symbol = token_contract.caller.symbol()
     token_decimal = token_contract.caller.decimals()
