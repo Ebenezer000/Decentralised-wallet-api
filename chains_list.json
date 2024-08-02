@@ -1,0 +1,98 @@
+{
+    "ETHEREUM": {
+        "rpc_provider": "https://mainnet.infura.io/v3/073d45dbb7714609b5980055d74875dd",
+        "chain_id": "1"
+    },
+    "BINANCE_SMART_CHAIN": {
+        "rpc_provider": "https://bsc-dataseed.binance.org/",
+        "chain_id": "56"
+    },
+    "AVALANCHE_C_CHAIN": {
+        "rpc_provider": "https://api.avax.network/ext/bc/C/rpc",
+        "chain_id": "43114"
+    },
+    "POLYGON": {
+        "rpc_provider": "https://polygon-rpc.com/",
+        "chain_id": "137"
+    },
+    "FANTOM": {
+        "rpc_provider": "https://rpc.ftm.tools/",
+        "chain_id": "250"
+    },
+    "ARBITRUM": {
+        "rpc_provider": "https://arb1.arbitrum.io/rpc",
+        "chain_id": "42161"
+    },
+    "OPTIMISM": {
+        "rpc_provider": "https://mainnet.optimism.io/",
+        "chain_id": "10"
+    },
+    "MOONBEAM": {
+        "rpc_provider": "https://rpc.api.moonbeam.network",
+        "chain_id": "1284"
+    },
+    "CRONOS": {
+        "rpc_provider": "https://evm-cronos.crypto.org",
+        "chain_id": "25"
+    },
+    "KOVAN_TESTNET": {
+        "rpc_provider": "https://kovan.infura.io/v3/073d45dbb7714609b5980055d74875dd",
+        "chain_id": "42"
+    },
+    "ROPSTEN_TESTNET": {
+        "rpc_provider": "https://ropsten.infura.io/v3/073d45dbb7714609b5980055d74875dd",
+        "chain_id": "3"
+    },
+    "RINKEBY_TESTNET": {
+        "rpc_provider": "https://rinkeby.infura.io/v3/073d45dbb7714609b5980055d74875dd",
+        "chain_id": "4"
+    },
+    "GOERLI_TESTNET": {
+        "rpc_provider": "https://goerli.infura.io/v3/073d45dbb7714609b5980055d74875dd",
+        "chain_id": "5"
+    },
+    "CELO": {
+        "rpc_provider": "https://forno.celo.org",
+        "chain_id": "42220"
+    },
+    "HARMONY_ONE": {
+        "rpc_provider": "https://api.harmony.one",
+        "chain_id": "1666600000"
+    },
+    "XDAI": {
+        "rpc_provider": "https://rpc.xdaichain.com/",
+        "chain_id": "100"
+    },
+    "HUOBI_ECO_CHAIN": {
+        "rpc_provider": "https://http-mainnet.hecochain.com",
+        "chain_id": "128"
+    },
+    "OKEXCHAIN": {
+        "rpc_provider": "https://exchainrpc.okex.org",
+        "chain_id": "66"
+    },
+    "KLAYTN": {
+        "rpc_provider": "https://public-node-api.klaytnapi.com/v1/cypress",
+        "chain_id": "8217"
+    },
+    "TOMOCHAIN": {
+        "rpc_provider": "https://rpc.tomochain.com",
+        "chain_id": "88"
+    },
+    "VELAS": {
+        "rpc_provider": "https://evmexplorer.velas.com/rpc",
+        "chain_id": "106"
+    },
+    "IOTEX": {
+        "rpc_provider": "https://babel-api.mainnet.iotex.io",
+        "chain_id": "4689"
+    },
+    "AURORA": {
+        "rpc_provider": "https://mainnet.aurora.dev",
+        "chain_id": "1313161554"
+    },
+    "MILKOMEDA": {
+        "rpc_provider": "https://rpc-mainnet-cardano-evm.c1.milkomeda.com",
+        "chain_id": "2001"
+    }
+}

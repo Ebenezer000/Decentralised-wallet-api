@@ -4,7 +4,7 @@ from flask import Response, Flask, request
 from zpywallet import wallet
 from wallet.multichain_wallet import MultiChainWallet
 from wallet.multichain_wallet.chain import chains
-from wallet.evm import transfer_eth, phrase_to_account, transfer_token, import_token
+from wallet.evm import get_evm_balance, transfer_eth, phrase_to_account, transfer_token, import_token
 from wallet.bitcoin import transfer_btc, transfer_altcoin
 from wallet.solana import transfer_sol
 from wallet.tron import transfer_trx, phrase_to_tron_account
@@ -37,10 +37,10 @@ def create_wallet():
     
     wallet = {
         'seed': seed,
-        'bitcoin account': bitcoin,
-        'eth account': eth,
-        'tron account': tron,
-        'solana account': solana
+        'bitcoin': bitcoin,
+        'ethereum': eth,
+        'tron': tron,
+        'solana': solana
     }
 
     wallet_json = json.dumps(wallet, indent=4)
@@ -54,8 +54,7 @@ def fetch_wallet():
 
     multi_wallet = MultiChainWallet(seed)
     try: 
-        coin_type = chains[chain]['coin']
-        wallet = multi_wallet.get_altcoin_account(coin_type)
+        wallet = multi_wallet.get_altcoin_account(chain)
         
         wallet = {
             'seed': seed,
@@ -134,6 +133,25 @@ def transfer_evm():
     # }
 
     return transaction_details
+
+@app.route('/import_chain', methods=['POST'])
+def import_chain():
+    body: tuple = request.json
+    seed: str = body["seed"]
+    rpc_provider: str = body['rpc_provider']
+
+    account = phrase_to_account(rpc_provider, seed)
+    balance = get_evm_balance(rpc_provider, account["address"])
+
+    wallet = {
+        'seed': seed,
+        'address': account['address'],
+        'private_key': account['key'],
+        'balance': balance
+    }
+
+    return wallet
+
 
 @app.route('/transfer_token_evm', methods=['POST'])
 def transfer_token_evm():

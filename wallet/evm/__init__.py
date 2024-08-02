@@ -23,6 +23,21 @@ def phrase_to_account(chain_provider, phrase) -> dict:
     }
     return account
 
+def get_evm_balance(chain_rpc, address):
+    """
+    Function to retieve base balance of address
+    Args:
+        chain_rpc[str]: RPC provider of chain
+        address[str]: Address of user
+    Returns:
+        str: balance of user     
+    """
+    balance = ""
+    w3 = Web3(Web3.HTTPProvider(chain_rpc))
+    balance = w3.eth.get_balance(address)
+    return balance
+   
+
 def transfer_eth(chain_provider, explorer, account, to_address, amount_ether, gas=21000, gas_price=None):
     """
     Transfer Ether from one account to another.
