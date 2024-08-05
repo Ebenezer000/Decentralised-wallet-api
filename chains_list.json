@@ -1,98 +1,122 @@
 {
     "ETHEREUM": {
         "rpc_provider": "https://mainnet.infura.io/v3/073d45dbb7714609b5980055d74875dd",
-        "chain_id": "1"
+        "chain_id": "1",
+        "explorer_url": "https://etherscan.io"
     },
     "BINANCE_SMART_CHAIN": {
         "rpc_provider": "https://bsc-dataseed.binance.org/",
-        "chain_id": "56"
+        "chain_id": "56",
+        "explorer_url": "https://bscscan.com"
     },
     "AVALANCHE_C_CHAIN": {
         "rpc_provider": "https://api.avax.network/ext/bc/C/rpc",
-        "chain_id": "43114"
+        "chain_id": "43114",
+        "explorer_url": "https://snowtrace.io"
     },
     "POLYGON": {
         "rpc_provider": "https://polygon-rpc.com/",
-        "chain_id": "137"
+        "chain_id": "137",
+        "explorer_url": "https://polygonscan.com"
     },
     "FANTOM": {
         "rpc_provider": "https://rpc.ftm.tools/",
-        "chain_id": "250"
+        "chain_id": "250",
+        "explorer_url": "https://ftmscan.com"
     },
     "ARBITRUM": {
         "rpc_provider": "https://arb1.arbitrum.io/rpc",
-        "chain_id": "42161"
+        "chain_id": "42161",
+        "explorer_url": "https://arbiscan.io"
     },
     "OPTIMISM": {
         "rpc_provider": "https://mainnet.optimism.io/",
-        "chain_id": "10"
+        "chain_id": "10",
+        "explorer_url": "https://optimistic.etherscan.io"
     },
     "MOONBEAM": {
         "rpc_provider": "https://rpc.api.moonbeam.network",
-        "chain_id": "1284"
+        "chain_id": "1284",
+        "explorer_url": "https://moonscan.io"
     },
     "CRONOS": {
         "rpc_provider": "https://evm-cronos.crypto.org",
-        "chain_id": "25"
+        "chain_id": "25",
+        "explorer_url": "https://cronoscan.com"
     },
     "KOVAN_TESTNET": {
         "rpc_provider": "https://kovan.infura.io/v3/073d45dbb7714609b5980055d74875dd",
-        "chain_id": "42"
+        "chain_id": "42",
+        "explorer_url": "https://kovan.etherscan.io"
     },
     "ROPSTEN_TESTNET": {
         "rpc_provider": "https://ropsten.infura.io/v3/073d45dbb7714609b5980055d74875dd",
-        "chain_id": "3"
+        "chain_id": "3",
+        "explorer_url": "https://ropsten.etherscan.io"
     },
     "RINKEBY_TESTNET": {
         "rpc_provider": "https://rinkeby.infura.io/v3/073d45dbb7714609b5980055d74875dd",
-        "chain_id": "4"
+        "chain_id": "4",
+        "explorer_url": "https://rinkeby.etherscan.io"
     },
     "GOERLI_TESTNET": {
         "rpc_provider": "https://goerli.infura.io/v3/073d45dbb7714609b5980055d74875dd",
-        "chain_id": "5"
+        "chain_id": "5",
+        "explorer_url": "https://goerli.etherscan.io"
     },
     "CELO": {
         "rpc_provider": "https://forno.celo.org",
-        "chain_id": "42220"
+        "chain_id": "42220",
+        "explorer_url": "https://explorer.celo.org"
     },
     "HARMONY_ONE": {
         "rpc_provider": "https://api.harmony.one",
-        "chain_id": "1666600000"
+        "chain_id": "1666600000",
+        "explorer_url": "https://explorer.harmony.one"
     },
     "XDAI": {
         "rpc_provider": "https://rpc.xdaichain.com/",
-        "chain_id": "100"
+        "chain_id": "100",
+        "explorer_url": "https://blockscout.com/xdai/mainnet"
     },
     "HUOBI_ECO_CHAIN": {
         "rpc_provider": "https://http-mainnet.hecochain.com",
-        "chain_id": "128"
+        "chain_id": "128",
+        "explorer_url": "https://hecoinfo.com"
     },
     "OKEXCHAIN": {
         "rpc_provider": "https://exchainrpc.okex.org",
-        "chain_id": "66"
+        "chain_id": "66",
+        "explorer_url": "https://www.oklink.com/okexchain"
     },
     "KLAYTN": {
         "rpc_provider": "https://public-node-api.klaytnapi.com/v1/cypress",
-        "chain_id": "8217"
+        "chain_id": "8217",
+        "explorer_url": "https://scope.klaytn.com"
     },
     "TOMOCHAIN": {
         "rpc_provider": "https://rpc.tomochain.com",
-        "chain_id": "88"
+        "chain_id": "88",
+        "explorer_url": "https://scan.tomochain.com"
     },
     "VELAS": {
         "rpc_provider": "https://evmexplorer.velas.com/rpc",
-        "chain_id": "106"
+        "chain_id": "106",
+        "explorer_url": "https://explorer.velas.com"
     },
     "IOTEX": {
         "rpc_provider": "https://babel-api.mainnet.iotex.io",
-        "chain_id": "4689"
+        "chain_id": "4689",
+        "explorer_url": "https://iotexscan.io"
     },
     "AURORA": {
         "rpc_provider": "https://mainnet.aurora.dev",
-        "chain_id": "1313161554"
+        "chain_id": "1313161554",
+        "explorer_url": "https://aurorascan.dev"
     },
     "MILKOMEDA": {
         "rpc_provider": "https://rpc-mainnet-cardano-evm.c1.milkomeda.com",
-        "chain_id": "2001"
+        "chain_id": "2001",
+        "explorer_url": "https://explorer-mainnet-cardano-evm.c1.milkomeda.com"
     }
 }

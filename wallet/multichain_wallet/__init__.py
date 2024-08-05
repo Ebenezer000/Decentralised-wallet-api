@@ -31,7 +31,7 @@ class MultiChainWallet:
         public_key = account.PublicKey().ToAddress()  # Bitcoin address
 
         # Fetch the balance using blockcypher
-        balance = self.get_crypto_balance(public_key, "btc")
+        balance = self.get_crypto_balance(address = public_key, coin_symbol =  "btc")
         return {"address": public_key, "private_key": private_key, "balance": balance}
 
     def get_crypto_balance(address: str, coin_symbol: str = "btc") -> float:
@@ -182,7 +182,7 @@ class MultiChainWallet:
                 "DASH": "dash",  # Dash
                 "DOGE": "doge"   # Dogecoin
             }
-            balance = self.get_crypto_balance(address, coin_symbols[coin])
+            balance = self.get_crypto_balance(address = address, coin_symbol = coin_symbols[coin])
             
             return {"address": address, "private_key": private_key, "balance": balance}
         
