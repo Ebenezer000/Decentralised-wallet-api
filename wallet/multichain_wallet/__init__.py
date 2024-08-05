@@ -29,7 +29,6 @@ class MultiChainWallet:
         public_key = account.PublicKey().ToAddress()  # Bitcoin address
         
         # Fetch the balance using blockcypher
-        print(public_key)
         balance = get_crypto_balance(address = str(public_key), coin_symbol =  "btc")
         return {"address": public_key, "private_key": private_key, "balance": balance}
 
@@ -48,7 +47,7 @@ class MultiChainWallet:
         private_key = account.PrivateKey().Raw().ToBytes()
         full_key = Account.from_key(private_key)  # Bitcoin address
 
-        balance = get_alt_crypto_balance(full_key.address, "ETHEREUM")
+        balance = get_alt_crypto_balance("ETHEREUM", full_key.address)
             
         return {"address": full_key.address, "private_key": full_key.key.hex(), "balance": balance}
     
@@ -68,7 +67,7 @@ class MultiChainWallet:
         private_key = account.PrivateKey().Raw().ToHex()
         tron_account = PrivateKey(bytes.fromhex(private_key))
         public_key = PublicKey.to_base58check_address(tron_account.public_key)
-        balance = get_alt_crypto_balance(public_key, "TRON")
+        balance = get_alt_crypto_balance("TRON", public_key)
         return {"address": public_key, "private_key": private_key, "balance": balance}
 
     def get_solana_account(self, account_index: int = 0) -> Keypair:
@@ -86,7 +85,7 @@ class MultiChainWallet:
         total_key = account.PrivateKey().Raw().ToBytes()
         keypair_total = Keypair.from_seed(total_key)
 
-        balance = get_alt_crypto_balance(str(keypair_total.pubkey()), "SOLANA")
+        balance = get_alt_crypto_balance(str( "SOLANA", keypair_total.pubkey()))
         return {"address": str(keypair_total.pubkey()), "private_key": keypair_total.secret().hex(), "balance": balance}
 
     def get_altcoin_account(self, coin: str, account_index: int = 0) -> dict:

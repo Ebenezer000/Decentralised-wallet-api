@@ -53,10 +53,18 @@ def get_alt_crypto_balance(chain, address):
     if chain == "ETHEREUM":
         w3 = Web3(Web3.HTTPProvider("https://mainnet.infura.io/v3/073d45dbb7714609b5980055d74875dd"))
         balance = w3.eth.get_balance(address)
-    
+        if balance != "":
+            return int(balance)
+        else:
+            return 0
+        
     elif chain == "TRON":
         w3 = Tron(HTTPProvider('https://api.trongrid.io'))
         balance = w3.get_account_balance(address)
+        if balance != "":
+            return int(balance)
+        else:
+            return 0
 
     elif chain == "SOLANA":
         rpc_url: str = "https://api.mainnet-beta.solana.com"
@@ -66,9 +74,11 @@ def get_alt_crypto_balance(chain, address):
         if response.get("result"):
             lamports = response["result"]["value"]
             sol = lamports / 1e9  # Convert lamports to SOL
-            return sol
+            if balance != "":
+                return int(sol)
+            else:
+                return 0
         else:
             print(f"Error fetching balance: {response.get('error')}")
             balance = "0"
-
-    return balance 
+            return balance
