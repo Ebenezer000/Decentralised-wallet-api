@@ -60,11 +60,15 @@ def get_alt_crypto_balance(chain, address):
         
     elif chain == "TRON":
         w3 = Tron(HTTPProvider('https://api.trongrid.io'))
-        balance = w3.get_account_balance(address)
-        if balance != "":
-            return int(balance)
-        else:
+        try:
+            balance = w3.get_account_balance(address)
+            if balance != "":
+                return int(balance)
+            else:
+                return 0
+        except Exception as e:
             return 0
+
 
     elif chain == "SOLANA":
         rpc_url: str = "https://api.mainnet-beta.solana.com"
