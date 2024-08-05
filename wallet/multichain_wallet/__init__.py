@@ -85,7 +85,7 @@ class MultiChainWallet:
         total_key = account.PrivateKey().Raw().ToBytes()
         keypair_total = Keypair.from_seed(total_key)
 
-        balance = get_alt_crypto_balance("SOLANA", str(keypair_total.pubkey()))
+        balance = 0 # get_alt_crypto_balance("SOLANA", str(keypair_total.pubkey()))
         return {"address": str(keypair_total.pubkey()), "private_key": keypair_total.secret().hex(), "balance": balance}
 
     def get_altcoin_account(self, coin: str, account_index: int = 0) -> dict:
