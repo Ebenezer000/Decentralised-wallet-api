@@ -29,7 +29,7 @@ class MultiChainWallet:
         account = bip44_wallet.Purpose().Coin().Account(account_index).Change(Bip44Changes.CHAIN_EXT).AddressIndex(0)
         private_key = account.PrivateKey().Raw().ToHex()
         public_key = account.PublicKey().ToAddress()  # Bitcoin address
-
+        
         # Fetch the balance using blockcypher
         balance = self.get_crypto_balance(address = public_key, coin_symbol =  "btc")
         return {"address": public_key, "private_key": private_key, "balance": balance}

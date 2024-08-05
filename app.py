@@ -8,8 +8,6 @@ from wallet.evm import get_evm_balance, transfer_eth, phrase_to_account, transfe
 from wallet.bitcoin import transfer_btc, transfer_altcoin
 from wallet.solana import transfer_sol
 from wallet.tron import transfer_trx, phrase_to_tron_account
-from bip_utils import Bip44Coins
-
 
 app = Flask(__name__)
 
@@ -47,7 +45,7 @@ def create_wallet():
         wallet_json = json.dumps(wallet, indent=4)
         return Response(wallet_json, 200, mimetype="application/json")
     except Exception as e:
-        return Response(json.dumps(e), 500, mimetype="application/json")
+        return Response(json.dumps(str(e)), 500, mimetype="application/json")
 
 @app.route('/fetch_wallet', methods=['POST'])
 def fetch_wallet():
@@ -67,7 +65,7 @@ def fetch_wallet():
         wallet_json = json.dumps(wallet, indent=4)
         return Response(wallet_json, 200, mimetype="application/json")
     except Exception as e:
-        return Response(json.dumps(e), 500, mimetype="application/json")
+        return Response(json.dumps(str(e)), 500, mimetype="application/json")
 
 @app.route('/fetch_price', methods=['POST'])
 def fetch_price():
@@ -139,7 +137,7 @@ def transfer_evm():
         return transaction_details
     
     except Exception as e:
-        return Response(json.dumps(e), 500, mimetype="application/json")
+        return Response(json.dumps(str(e)), 500, mimetype="application/json")
 
 @app.route('/import_chain', methods=['POST'])
 def import_chain():
@@ -160,7 +158,7 @@ def import_chain():
 
         return wallet
     except Exception as e:
-        return Response(json.dumps(e), 500, mimetype="application/json")
+        return Response(json.dumps(str(e)), 500, mimetype="application/json")
 
 
 @app.route('/transfer_token_evm', methods=['POST'])
@@ -186,7 +184,7 @@ def transfer_token_evm():
         return transaction_details
     
     except Exception as e:
-        return Response(json.dumps(e), 500, mimetype="application/json")
+        return Response(json.dumps(str(e)), 500, mimetype="application/json")
 
 @app.route('/import_token_evm', methods=['POST'])
 def fetch_evm_token():
@@ -201,7 +199,7 @@ def fetch_evm_token():
         return token_details
     
     except Exception as e:
-        return Response(json.dumps(e), 500, mimetype="application/json")
+        return Response(json.dumps(str(e)), 500, mimetype="application/json")
 
 ###
 # END EVM API CALS
@@ -251,7 +249,7 @@ def transfer_btc_alts():
         return transaction_details
     
     except Exception as e:
-        return Response(json.dumps(e), 500, mimetype="application/json")
+        return Response(json.dumps(str(e)), 500, mimetype="application/json")
 ###
 # END BTC ALTCOINS API CALS
 ###
@@ -272,7 +270,7 @@ def transfer_solana():
 
         return transaction_details
     except Exception as e:
-        return Response(json.dumps(e), 500, mimetype="application/json")
+        return Response(json.dumps(str(e)), 500, mimetype="application/json")
     
 
 
@@ -296,4 +294,4 @@ def transfer_tron():
 
         return transaction_details
     except Exception as e:
-        return Response(json.dumps(e), 500, mimetype="application/json")
+        return Response(json.dumps(str(e)), 500, mimetype="application/json")
