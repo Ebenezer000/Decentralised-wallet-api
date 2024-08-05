@@ -30,21 +30,24 @@ def create_wallet():
     seed: str = body["mnemonic"]
     multi_wallet = MultiChainWallet(seed)
 
-    bitcoin = multi_wallet.get_bitcoin_account()
-    eth = multi_wallet.get_eth_account()
-    tron = multi_wallet.get_tron_account()
-    solana = multi_wallet.get_solana_account()
-    
-    wallet = {
-        'seed': seed,
-        'bitcoin': bitcoin,
-        'ethereum': eth,
-        'tron': tron,
-        'solana': solana
-    }
+    try:
+        bitcoin = multi_wallet.get_bitcoin_account()
+        eth = multi_wallet.get_eth_account()
+        tron = multi_wallet.get_tron_account()
+        solana = multi_wallet.get_solana_account()
+        
+        wallet = {
+            'seed': seed,
+            'bitcoin': bitcoin,
+            'ethereum': eth,
+            'tron': tron,
+            'solana': solana
+        }
 
-    wallet_json = json.dumps(wallet, indent=4)
-    return Response(wallet_json, 200, mimetype="application/json")
+        wallet_json = json.dumps(wallet, indent=4)
+        return Response(wallet_json, 200, mimetype="application/json")
+    except Exception as e:
+        return Response(json.dumps(e), 500, mimetype="application/json")
 
 @app.route('/fetch_wallet', methods=['POST'])
 def fetch_wallet():
@@ -63,8 +66,8 @@ def fetch_wallet():
 
         wallet_json = json.dumps(wallet, indent=4)
         return Response(wallet_json, 200, mimetype="application/json")
-    except:
-        return "This Coin is Currently Unavailable Please try again"
+    except Exception as e:
+        return Response(json.dumps(e), 500, mimetype="application/json")
 
 @app.route('/fetch_price', methods=['POST'])
 def fetch_price():
@@ -123,16 +126,20 @@ def transfer_evm():
     rpc_provider: str = body["rpc_provider"]
     explorer_url: str = body["explorer_url"]
 
-    account = phrase_to_account(rpc_provider, seed)
-    transaction_details = transfer_eth(rpc_provider, explorer_url, account, recipient, amount)
+    try:
+        account = phrase_to_account(rpc_provider, seed)
+        transaction_details = transfer_eth(rpc_provider, explorer_url, account, recipient, amount)
 
-    # transaction_details = {
-    #     "transaction_state": "COMPLETED",
-    #     "transaction_hash": tx_hash,
-    #     "transaction_link": explore_link
-    # }
+        # transaction_details = {
+        #     "transaction_state": "COMPLETED",
+        #     "transaction_hash": tx_hash,
+        #     "transaction_link": explore_link
+        # }
 
-    return transaction_details
+        return transaction_details
+    
+    except Exception as e:
+        return Response(json.dumps(e), 500, mimetype="application/json")
 
 @app.route('/import_chain', methods=['POST'])
 def import_chain():
@@ -140,17 +147,20 @@ def import_chain():
     seed: str = body["seed"]
     rpc_provider: str = body['rpc_provider']
 
-    account = phrase_to_account(rpc_provider, seed)
-    balance = get_evm_balance(rpc_provider, account["address"])
+    try: 
+        account = phrase_to_account(rpc_provider, seed)
+        balance = get_evm_balance(rpc_provider, account["address"])
 
-    wallet = {
-        'seed': seed,
-        'address': account['address'],
-        'private_key': account['key'],
-        'balance': balance
-    }
+        wallet = {
+            'seed': seed,
+            'address': account['address'],
+            'private_key': account['key'],
+            'balance': balance
+        }
 
-    return wallet
+        return wallet
+    except Exception as e:
+        return Response(json.dumps(e), 500, mimetype="application/json")
 
 
 @app.route('/transfer_token_evm', methods=['POST'])
@@ -163,16 +173,20 @@ def transfer_token_evm():
     rpc_provider: str = body["rpc_provider"]
     explorer_url: str = body["explorer_url"]
 
-    account = phrase_to_account(rpc_provider, seed)
-    transaction_details = transfer_token(rpc_provider, explorer_url, account, recipient, token_address, amount)
+    try: 
+        account = phrase_to_account(rpc_provider, seed)
+        transaction_details = transfer_token(rpc_provider, explorer_url, account, recipient, token_address, amount)
 
-    # transaction_details = {
-    #     "transaction_state": "COMPLETED",
-    #     "transaction_hash": tx_hash,
-    #     "transaction_link": explore_link
-    # }
+        # transaction_details = {
+        #     "transaction_state": "COMPLETED",
+        #     "transaction_hash": tx_hash,
+        #     "transaction_link": explore_link
+        # }
 
-    return transaction_details
+        return transaction_details
+    
+    except Exception as e:
+        return Response(json.dumps(e), 500, mimetype="application/json")
 
 @app.route('/import_token_evm', methods=['POST'])
 def fetch_evm_token():
@@ -181,9 +195,13 @@ def fetch_evm_token():
     user_address: str = body['user_address']
     token_address: str = body['token_address']
 
-    token_details = import_token(rpc_provider, token_address, user_address)
+    try: 
+        token_details = import_token(rpc_provider, token_address, user_address)
 
-    return token_details
+        return token_details
+    
+    except Exception as e:
+        return Response(json.dumps(e), 500, mimetype="application/json")
 
 ###
 # END EVM API CALS
@@ -210,28 +228,30 @@ def transfer_btc_alts():
 
     multi_wallet = MultiChainWallet(seed)
 
-    if coin in ['LITECOIN', 'DOGECOIN', 'DASH']:
-        coin_symbol = (
-            "doge" if coin == "DOGECOIN" 
-            else "ltc" if coin == "LITECOIN" 
-            else "dash"
-        )
-        coin_type = chains[coin]['coin']
-        wallet_keys = multi_wallet.get_altcoin_account(coin_type)
+    try:
+        if coin in ['LITECOIN', 'DOGECOIN', 'DASH']:
+            coin_symbol = (
+                "doge" if coin == "DOGECOIN" 
+                else "ltc" if coin == "LITECOIN" 
+                else "dash"
+            )
+            coin_type = chains[coin]['coin']
+            wallet_keys = multi_wallet.get_altcoin_account(coin_type)
 
-        transaction_hash = transfer_altcoin(wallet_keys['private_key'], recipient, float(amount), coin_symbol)
+            transaction_hash = transfer_altcoin(wallet_keys['private_key'], recipient, float(amount), coin_symbol)
 
-    elif coin == "BITCOIN":
-        coin_symbol = "btc"
+        elif coin == "BITCOIN":
+            coin_symbol = "btc"
 
-        coin_type = chains[coin]['coin']
-        wallet_keys = multi_wallet.get_altcoin_account(coin_type)
+            coin_type = chains[coin]['coin']
+            wallet_keys = multi_wallet.get_altcoin_account(coin_type)
 
-        transaction_hash = transfer_btc(wallet_keys['private_key'], recipient, float(amount), coin_symbol)
+            transaction_hash = transfer_btc(wallet_keys['private_key'], recipient, float(amount), coin_symbol)
 
-
-    return transaction_details
-
+        return transaction_details
+    
+    except Exception as e:
+        return Response(json.dumps(e), 500, mimetype="application/json")
 ###
 # END BTC ALTCOINS API CALS
 ###
@@ -242,14 +262,18 @@ def transfer_solana():
     seed: str = body["seed"]
     recipient: str = body["recipient"]
     amount: str = body["amount"]
-    tx_hash = transfer_sol(seed, recipient, amount)
-    transaction_details = {
-        "transaction_state": "COMPLETED",
-        "transaction_hash": tx_hash,
-        "transaction_link": f"https://solscan.io/tx/{tx_hash}"
-    }
+    try:
+        tx_hash = transfer_sol(seed, recipient, amount)
+        transaction_details = {
+            "transaction_state": "COMPLETED",
+            "transaction_hash": tx_hash,
+            "transaction_link": f"https://solscan.io/tx/{tx_hash}"
+        }
 
-    return transaction_details
+        return transaction_details
+    except Exception as e:
+        return Response(json.dumps(e), 500, mimetype="application/json")
+    
 
 
 
@@ -259,13 +283,17 @@ def transfer_tron():
     seed: str = body["seed"]
     recipient: str = body["recipient"]
     amount: str = body["amount"]
-    account = phrase_to_tron_account(seed)
-    tx_hash = transfer_trx("mainnet", account, recipient, amount)
+    try:
 
-    transaction_details = {
-        "transaction_state": "COMPLETED",
-        "transaction_hash": tx_hash,
-        "transaction_link": f"https://solscan.io/tx/{tx_hash}"
-    }
+        account = phrase_to_tron_account(seed)
+        tx_hash = transfer_trx("mainnet", account, recipient, amount)
 
-    return transaction_details
+        transaction_details = {
+            "transaction_state": "COMPLETED",
+            "transaction_hash": tx_hash,
+            "transaction_link": f"https://solscan.io/tx/{tx_hash}"
+        }
+
+        return transaction_details
+    except Exception as e:
+        return Response(json.dumps(e), 500, mimetype="application/json")
