@@ -2,6 +2,7 @@ import blockcypher
 from tronpy import Tron
 from web3 import Web3
 from solana.rpc.api import Client
+from solders.pubkey import Pubkey
 from tronpy.providers import HTTPProvider
 
 def get_crypto_balance(address: str, coin_symbol: str = "btc") -> float:
@@ -71,18 +72,16 @@ def get_alt_crypto_balance(chain, address):
 
 
     elif chain == "SOLANA":
-        rpc_url: str = "https://api.mainnet-beta.solana.com"
+        rpc_url = "https://api.mainnet-beta.solana.com"
         client = Client(rpc_url)
-        response = client.get_balance(address)
 
-        if response.get("result"):
-            lamports = response["result"]["value"]
+        try:
+            address_pubkey = Pubkey.from_string(address)
+            response = client.get_balance(address_pubkey)
+            lamports = response.value
             sol = lamports / 1e9  # Convert lamports to SOL
-            if balance != "":
-                return int(sol)
-            else:
-                return 0
-        else:
-            print(f"Error fetching balance: {response.get('error')}")
-            balance = "0"
-            return balance
+            print(sol)
+            return sol
+        except Exception as e:
+            print(f"Error fetching balance: {e}")
+            return 0
