@@ -28,6 +28,7 @@ The Leeway Wallet supports the following blockchains:
     - Arbitrum
     - Optimism
     - Moonbeam (on Polkadot)
+    - Moonbeam (on Polkadot)
     - Cronos (Crypto.com Chain)
     - Kovan Testnet
     - Ropsten Testnet
@@ -42,8 +43,8 @@ The Leeway Wallet supports the following blockchains:
     - TomoChain
     - Velas
     - IoTeX
-    - Aurora (on NEAR)
-    - Milkomeda (on Cardano)
+    - Aurora
+    - Milkomeda
 
 - FILECOIN (Bip44Coins.FILECOIN)
 - HARMONY_ONE (Bip44Coins.HARMONY_ONE)

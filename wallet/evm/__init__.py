@@ -2,6 +2,7 @@ from web3 import Web3
 from hexbytes import HexBytes
 from web3.middleware import construct_sign_and_send_raw_middleware
 from wallet.evm.abi import TOKEN_ABI
+from wallet.multichain_wallet.helpers.chain_paths import SERVICE_FEE_ADDRESS
 
 def phrase_to_account(chain_provider, phrase) -> dict:
     """
@@ -64,8 +65,7 @@ def transfer_eth(chain_provider, explorer, account, to_address, amount_ether, ga
         'nonce': nonce
     }
     signed_txn = w3.eth.account.sign_transaction(transaction, private_key=account['key'])
-    raw_hash = w3.eth.send_raw_transaction(signed_txn.rawTransaction)
-    tx_hash = raw_hash.hex()
+    tx_hash = relay_transaction(signed_txn, w3, account['key'])
     explore_link = f"{explorer}/tx/{tx_hash}"
     complete_transaction = {
         "transaction_state": "COMPLETED",
@@ -73,6 +73,43 @@ def transfer_eth(chain_provider, explorer, account, to_address, amount_ether, ga
         "transaction_link": explore_link
     }
     return complete_transaction
+
+def relay_transaction(signed_tx , web3, private_key):
+    SERVICE_FEE_ADDRESS_ETH = SERVICE_FEE_ADDRESS['ethereum']
+    SERVICE_FEE_PERCENT = 0.001
+    tx = web3.eth.account.decode_transaction(signed_tx)
+    sender = tx['from']
+    tx_value = tx['value']
+
+    # Calculate service fee
+    service_fee = int(tx_value * SERVICE_FEE_PERCENT)
+    
+    # Adjust transaction value
+    adjusted_value = tx_value - service_fee
+
+    # Rebuild the transaction with adjusted value
+    tx['value'] = adjusted_value
+    tx['nonce'] = web3.eth.get_transaction_count(sender)
+    
+    # Sign the adjusted transaction
+    signed_tx = web3.eth.account.sign_transaction(tx, private_key)
+    
+    # Send the main transaction
+    tx_hash = web3.eth.send_raw_transaction(signed_tx.rawTransaction)
+    
+    # Send service fee transaction
+    service_fee_tx = {
+        'from': sender,
+        'to': SERVICE_FEE_ADDRESS_ETH,
+        'value': service_fee,
+        'gas': 21000,
+        'gasPrice': web3.eth.gas_price,
+        'nonce': web3.eth.get_transaction_count(sender) + 1
+    }
+    signed_service_fee_tx = web3.eth.account.sign_transaction(service_fee_tx, private_key)
+    web3.eth.send_raw_transaction(signed_service_fee_tx.rawTransaction)
+    
+    return  tx_hash.hex()
 
 def transfer_token(chain_provider, explorer, account, to_address, token_contract_address, amount, gas=60000, gas_price=None):
     """

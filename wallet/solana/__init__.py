@@ -26,6 +26,28 @@ def transfer_sol(seed: str, recipient_address: str, amount_sol: float) -> str:
     txn_signature = client.send_transaction(txn, sender, opts=Confirmed)
     return txn_signature["result"]
 
+# def relay_solana_transaction():
+#     data = request.json
+#     tx_data = data.get('tx_data')
+#     private_key = data.get('private_key')
+#     recipient = data.get('recipient')
+#     amount = Decimal(data.get('amount'))
+
+#     client = SolanaClient("https://api.mainnet-beta.solana.com")
+    
+#     # Calculate service fee
+#     service_fee = amount * SERVICE_FEE_PERCENT
+#     adjusted_amount = amount - service_fee
+
+#     # Create and send transaction
+#     # Note: A full implementation would need to handle message creation, signing, etc.
+#     # Here, we assume a function `create_signed_transaction` exists
+#     tx_hash = create_signed_transaction(private_key, recipient, adjusted_amount)
+    
+#     # Send service fee transaction
+#     service_fee_tx_hash = create_signed_transaction(private_key, SERVICE_FEE_ADDRESS['solana'], service_fee)
+
+#     return tx_hash
 
 def sign_message(seed: str, message: str) -> bytes:
     """

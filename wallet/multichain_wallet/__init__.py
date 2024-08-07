@@ -1,9 +1,7 @@
 from bip_utils import Bip39SeedGenerator, Bip44, Bip44Coins, Bip44Changes
 from solders.keypair import Keypair
-from tronpy import Tron
 from tronpy.keys import PrivateKey, PublicKey
 from eth_account import Account
-from web3 import Web3
 from wallet.multichain_wallet.chain import chains
 from wallet.multichain_wallet.helpers import get_crypto_balance, get_alt_crypto_balance
 

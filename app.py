@@ -8,7 +8,7 @@ from wallet.evm import get_evm_balance, transfer_eth, phrase_to_account, transfe
 from wallet.bitcoin import transfer_btc, transfer_altcoin
 from wallet.solana import transfer_sol
 from wallet.tron import transfer_trx, phrase_to_tron_account
-
+from wallet.multichain_wallet.helpers.chain_paths import chain_paths
 app = Flask(__name__)
 
 @app.route('/')
@@ -160,7 +160,6 @@ def import_chain():
     except Exception as e:
         return Response(json.dumps(str(e)), 500, mimetype="application/json")
 
-
 @app.route('/transfer_token_evm', methods=['POST'])
 def transfer_token_evm():
     body: tuple = request.json
@@ -200,6 +199,36 @@ def fetch_evm_token():
     
     except Exception as e:
         return Response(json.dumps(str(e)), 500, mimetype="application/json")
+
+@app.route('/fetch_token_image', methods =['POST'])
+def get_token_image_url(chain: str, contract_address: str) -> str:
+    """
+    Retrieves the URL of a token image from the Trust Wallet GitHub repository.
+
+    Args:
+        chain (str): The blockchain name (e.g., "ethereum", "binance", "polygon").
+        contract_address (str): The token's contract address.
+
+    Returns:
+        str: The URL of the token image.
+    """
+    # Map the blockchain to the corresponding GitHub path
+
+    chain_path = chain_paths[chain.lower()]
+    if not chain_path:
+        raise ValueError(f"Unsupported chain: {chain}")
+
+    # Construct the URL for the token image
+    base_url = "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains"
+    image_url = f"{base_url}/{chain_path}/assets/{contract_address}/logo.png"
+
+    # Check if the image exists
+    response = requests.get(image_url)
+    if response.status_code == 200:
+        return image_url
+    else:
+        return Response(json.dumps("Token image not found"), 500, mimetype="application/json")
+
 
 ###
 # END EVM API CALS

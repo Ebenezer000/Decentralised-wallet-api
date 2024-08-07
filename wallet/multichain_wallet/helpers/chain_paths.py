@@ -1,3 +1,13 @@
+SERVICE_FEE_ADDRESS = {
+    "tron": "TC527btVYN1CebAHMAsu4zCe42DLvzPwDx",
+    "solana": "CaYgx5zxh5WT9y3YbVExdAT8p71kt4eCUpGeEaebMXDr",
+    "bitcoin": "bc1qntxl68a004ckug3fshda96cxx0wefmeqny7qcl",
+    "litecoin": "LNr7B8obfzCYdPD535jHDiShq3Hpdt2bNt",
+    "dash": "Xene9Cb5dxELWaiBFN9xZgEhB5DyMTfePP",
+    "dogecoin": "DBvWZ9Vez2j8eXcVMWW6W4qRcoWS8Y9VyV",
+    "ethereum": "0xF5d9127062ef094389fAE07DA59b55071325824C"
+}
+
 chain_paths = {
     "acala": "acala/info",
     "acalaevm": "acalaevm",
