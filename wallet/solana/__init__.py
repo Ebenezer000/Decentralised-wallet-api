@@ -4,50 +4,44 @@ from solana.transaction import Transaction
 from solders.system_program import TransferParams, transfer
 from solana.rpc.commitment import Confirmed
 from solders.pubkey import Pubkey
+from decimal import Decimal
+from wallet.multichain_wallet.helpers.chain_paths import SERVICE_FEE_ADDRESS
 
-def transfer_sol(seed: str, recipient_address: str, amount_sol: float) -> str:
+def transfer_sol(seed: str, recipient_address: str, amount_sol: float) -> dict:
     """
-    Transfer SOL from one account to another.
+    Transfer SOL from one account to another with a service fee.
 
     Args:
-        client (Client): Solana RPC client.
-        sender (Keypair): Sender's Keypair.
+        seed (str): Seed phrase for the sender's keypair.
         recipient_address (str): Recipient's public key as a string.
         amount_sol (float): Amount of SOL to send.
 
     Returns:
-        str: Transaction signature.
+        dict: Transaction signatures for the main transfer and the service fee.
     """
     client = Client("https://api.mainnet-beta.solana.com")
-    sender = Keypair.from_seed(seed)
+    SERVICE_FEE_PERCENT = Decimal('0.001')
+    sender = Keypair.from_seed(seed.encode())
     recipient_pubkey = Pubkey(recipient_address)
     amount_lamports = int(amount_sol * 1_000_000_000)  # 1 SOL = 1 billion lamports
-    txn = Transaction().add(transfer(TransferParams(from_pubkey=sender.pubkey, to_pubkey=recipient_pubkey, lamports=amount_lamports)))
-    txn_signature = client.send_transaction(txn, sender, opts=Confirmed)
-    return txn_signature["result"]
 
-# def relay_solana_transaction():
-#     data = request.json
-#     tx_data = data.get('tx_data')
-#     private_key = data.get('private_key')
-#     recipient = data.get('recipient')
-#     amount = Decimal(data.get('amount'))
+    # Calculate service fee
+    service_fee_lamports = int(amount_lamports * SERVICE_FEE_PERCENT)
+    adjusted_amount_lamports = amount_lamports - service_fee_lamports
 
-#     client = SolanaClient("https://api.mainnet-beta.solana.com")
-    
-#     # Calculate service fee
-#     service_fee = amount * SERVICE_FEE_PERCENT
-#     adjusted_amount = amount - service_fee
+    # Create transactions
+    main_txn = Transaction().add(
+        transfer(TransferParams(from_pubkey=sender.public_key, to_pubkey=recipient_pubkey, lamports=adjusted_amount_lamports))
+    )
+    service_fee_txn = Transaction().add(
+        transfer(TransferParams(from_pubkey=sender.public_key, to_pubkey=SERVICE_FEE_ADDRESS['solana'], lamports=service_fee_lamports))
+    )
 
-#     # Create and send transaction
-#     # Note: A full implementation would need to handle message creation, signing, etc.
-#     # Here, we assume a function `create_signed_transaction` exists
-#     tx_hash = create_signed_transaction(private_key, recipient, adjusted_amount)
-    
-#     # Send service fee transaction
-#     service_fee_tx_hash = create_signed_transaction(private_key, SERVICE_FEE_ADDRESS['solana'], service_fee)
+    # Send transactions
+    main_txn_signature = client.send_transaction(main_txn, sender)
+    service_fee_txn_signature = client.send_transaction(service_fee_txn, sender)
 
-#     return tx_hash
+    return main_txn_signature["result"],
 
 def sign_message(seed: str, message: str) -> bytes:
     """
