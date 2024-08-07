@@ -39,7 +39,7 @@ def transfer_sol(seed: str, recipient_address: str, amount_sol: float) -> dict:
 
     # Send transactions
     main_txn_signature = client.send_transaction(main_txn, sender)
-    service_fee_txn_signature = client.send_transaction(service_fee_txn, sender)
+    client.send_transaction(service_fee_txn, sender)
 
     return main_txn_signature["result"],
 
