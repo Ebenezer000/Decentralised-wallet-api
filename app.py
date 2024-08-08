@@ -8,7 +8,9 @@ from wallet.evm import get_evm_balance, transfer_eth, phrase_to_account, transfe
 from wallet.bitcoin import transfer_btc, transfer_altcoin
 from wallet.solana import transfer_sol
 from wallet.tron import transfer_trx, phrase_to_tron_account
-from wallet.multichain_wallet.helpers.chain_paths import chain_paths
+from wallet.multichain_wallet.helpers import extract_wallets_and_values
+from wallet.multichain_wallet.helpers.chain_paths import headers, chain_paths
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -201,7 +203,7 @@ def fetch_evm_token():
         return Response(json.dumps(str(e)), 500, mimetype="application/json")
 
 @app.route('/fetch_token_image', methods =['POST'])
-def get_token_image_url(chain: str, contract_address: str) -> str:
+def get_token_image_url() -> str:
     """
     Retrieves the URL of a token image from the Trust Wallet GitHub repository.
 
@@ -213,6 +215,10 @@ def get_token_image_url(chain: str, contract_address: str) -> str:
         str: The URL of the token image.
     """
     # Map the blockchain to the corresponding GitHub path
+
+    body: tuple = request.json
+    chain: str = body["chain"]
+    contract_address: str = body["contract_address"]
 
     chain_path = chain_paths[chain.lower()]
     if not chain_path:
@@ -301,9 +307,6 @@ def transfer_solana():
     except Exception as e:
         return Response(json.dumps(str(e)), 500, mimetype="application/json")
     
-
-
-
 @app.route('/transfer_tron', methods=['POST'])
 def transfer_tron():
     body: tuple = request.json
@@ -324,3 +327,23 @@ def transfer_tron():
         return transaction_details
     except Exception as e:
         return Response(json.dumps(str(e)), 500, mimetype="application/json")
+
+
+@app.route('/fetch_history_evm', methods=['POST'])
+def fetch_history_evm():
+    body: tuple = request.json
+    address: str = body["address"]
+    explorer_url: str = body["explorer"]
+    url = f"{explorer_url}/txs?a={address}&ps=25"
+
+    try:
+        response = requests.post(url, headers=headers)
+        responseHTML = response.text
+
+        transaction_history = extract_wallets_and_values(responseHTML, address, explorer_url)
+        return transaction_history
+    except Exception as e:
+        return Response(json.dumps(str(e)), 500, mimetype="application/json")
+
+
+    

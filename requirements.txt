@@ -10,3 +10,4 @@ bip_utils
 bit
 blockcypher
 eth-account
+bs4

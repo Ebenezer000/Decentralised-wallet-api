@@ -8,6 +8,32 @@ SERVICE_FEE_ADDRESS = {
     "ethereum": "0xF5d9127062ef094389fAE07DA59b55071325824C"
 }
 
+headers = {
+    'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+    'accept-language': 'pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7',
+    'cache-control': 'max-age=0',
+    'content-type': 'application/x-www-form-urlencoded',
+    # 'cookie': 'etherscan_offset_datetime=-3; ASP.NET_SessionId=adlb5mlgizvcc4r20tfet00t; _gid=GA1.2.287212382.1712275920; etherscan_switch_age_datetime=; etherscan_address_format=0; etherscan_datetime_format=UTC; etherscan_isHighlight=false; etherscan_hidezeroalert=False; etherscan_hidepoortokenalert=False; etherscan_settings=x0:0|x1:0|x2:en|x3:USD|x4:0|x5:0|x6:ENS|x7:UTC|x8:0|x9:0|x10:0; CultureInfo=en; __stripe_mid=e7086c48-129f-4be7-a18f-79fd3f8c6fe4becfcb; etherscan_cookieconsent=True; _ga_XPR6BMZXSN=GS1.1.1712471378.24.0.1712471388.0.0.0; __cflb=02DiuFnsSsHWYH8WqVXcJWaecAw5gpnme1XR2vNREU1nC; cf_clearance=uVLkAfvSnO_PSksL.KVfk7F80K9TwGGNpuxyTR_HB20-1712675635-1.0.1.1-uTWp5ksADTXKMFLIscPZNZ43a.sacRUT.Rbf5TnVOasaPoBJX195t5X4YelaHU92wB20BgTrc8xqFieQLg6nOg; _ga=GA1.2.1298355549.1707881511; _gat_gtag_UA_46998878_6=1; _ga_T1JC9RNQXV=GS1.1.1712675635.57.1.1712676059.52.0.0',
+    'origin': 'https://etherscan.io',
+    'referer': 'https://etherscan.io/txs',
+    'sec-ch-ua': '"Google Chrome";v="123", "Not:A-Brand";v="8", "Chromium";v="123"',
+    'sec-ch-ua-arch': '"arm"',
+    'sec-ch-ua-bitness': '"64"',
+    'sec-ch-ua-full-version': '"123.0.6312.86"',
+    'sec-ch-ua-full-version-list': '"Google Chrome";v="123.0.6312.86", "Not:A-Brand";v="8.0.0.0", "Chromium";v="123.0.6312.86"',
+    'sec-ch-ua-mobile': '?0',
+    'sec-ch-ua-model': '""',
+    'sec-ch-ua-platform': '"macOS"',
+    'sec-ch-ua-platform-version': '"14.4.1"',
+    'sec-fetch-dest': 'document',
+    'sec-fetch-mode': 'navigate',
+    'sec-fetch-site': 'same-origin',
+    'sec-fetch-user': '?1',
+    'upgrade-insecure-requests': '1',
+    'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
+}
+
+
 chain_paths = {
     "acala": "acala/info",
     "acalaevm": "acalaevm",
