@@ -38,7 +38,7 @@ def extract_wallets_and_values(html_text, explorer_url):
 
             # Check if the value is greater than or equal to min_val
             transaction_history = {
-                "transaction_type": f"{"IN" if Inward_trx else "OUT"}",
+                "transaction_type": f"{'IN' if Inward_trx else 'OUT'}",
                 "transaction_hash": transaction_hash.text,
                 "transaction_name": method.text,
                 "transaction_date": trx_date.text,
