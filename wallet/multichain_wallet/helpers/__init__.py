@@ -8,6 +8,7 @@ from tronpy.providers import HTTPProvider
 from bs4 import BeautifulSoup
 
 def extract_wallets_and_values(html_text, explorer_url):
+
     # Parse the HTML using BeautifulSoup
     soup = BeautifulSoup(html_text, 'html.parser')
     
@@ -23,41 +24,31 @@ def extract_wallets_and_values(html_text, explorer_url):
         recipient_raw = row.find('a', href=re.compile(r"^/address/0x[0-9a-fA-F]{40}"))
         value_tag = row.find('span', {'class': 'td_showValue'})
         amount_tag = row.find('span', {'class': 'td_showAmount'})
-        method = row.find('span', {'class': 'd-block badge border border-opacity-10 text-dark fw-normal text-truncate w-100 py-1.5 bg-light border-dark dark:border-white'})
-        trx_date = row.find('span', {'class': 'showDate'})
-        trx_age = row.find('span', {'class': 'showAge'})
+        method = row.find('span', {'class': "d-block badge bg-light border border-dark dark:border-white border-opacity-10 text-dark fw-normal text-truncate w-100 py-1.5"})
+        trx_date = row.find('td', {'class': 'showDate'})
+        trx_age = row.find('td', {'class': 'showAge'})
         transaction_hash = row.find('a', href=re.compile(r"^/tx/0x[0-9a-fA-F]{64}$"))
 
-        inward_class = "badge bg-success bg-opacity-10 border border-success border-opacity-25 text-success fs-70x text-uppercase w-100 py-1.5"
-        Inward_trx = row.find('span', {'class': inward_class})
-        
-        if recipient_raw and transaction_hash:
+        inward = "badge bg-success bg-opacity-10 border border-success border-opacity-25 text-success fs-70x text-uppercase w-100 py-1.5"
+        Inward_trx = row.find('span', {'class': inward})
+
+        if trx_age and trx_date:
             # Extract and clean the address
             recipient = recipient_raw['href'].replace("/address/", "").strip()
 
-            # Extract and clean the value
-            value_text = value_tag.text if value_tag else None
-            amount_raw = amount_tag.text if amount_tag else None
-
-            # Debug: Print extracted elements
-            print(f"Method: {method}")
-            print(f"Inward_trx: {Inward_trx}")
-
-            method_name = method.text if method else "Unknown"
-
+            # Check if the value is greater than or equal to min_val
             transaction_history = {
-                "transaction_type": "IN" if Inward_trx else "OUT",
-                "transaction_hash": transaction_hash['href'].replace("/tx/", "").strip() if transaction_hash else None,
-                "transaction_name": method_name,
-                "transaction_date": trx_date.text if trx_date else None,
-                "transaction_age": trx_age.text if trx_age else None,
+                "transaction_type": f"{"IN" if Inward_trx else "OUT"}",
+                "transaction_hash": transaction_hash.text,
+                "transaction_name": method.text,
+                "transaction_date": trx_date.text,
+                "transaction_age": trx_age.text,
                 "recieving_address": recipient,
-                "amount": amount_raw,
-                "amount_in_usd": value_text,
-                'transaction_url': f"{explorer_url}/tx/{transaction_hash['href'].replace('/tx/', '').strip()}" if transaction_hash else None
+                "amount": amount_tag.text,
+                "amount_in_usd": value_tag.text,
+                'transaction_url': f"{explorer_url}/tx/{transaction_hash.text}"
             }
             full_history.append(transaction_history)
-    
     return full_history
 
 def get_crypto_balance(address: str, coin_symbol: str = "btc") -> float:

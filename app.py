@@ -328,7 +328,6 @@ def transfer_tron():
     except Exception as e:
         return Response(json.dumps(str(e)), 500, mimetype="application/json")
 
-
 @app.route('/fetch_history_evm', methods=['POST'])
 def fetch_history_evm():
     body: tuple = request.json

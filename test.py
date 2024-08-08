@@ -10,5 +10,5 @@ if __name__ == "__main__":
     response = requests.post(url, headers=headers)
     responseHTML = response.text
 
-    transaction_history = extract_wallets_and_values(responseHTML, address, explorer_url)
+    transaction_history = extract_wallets_and_values(responseHTML, explorer_url)
     print(transaction_history)
