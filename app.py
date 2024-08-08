@@ -340,7 +340,7 @@ def fetch_history_evm():
         response = requests.post(url, headers=headers)
         responseHTML = response.text
 
-        transaction_history = extract_wallets_and_values(responseHTML, address, explorer_url)
+        transaction_history = extract_wallets_and_values(responseHTML, explorer_url)
         return Response(json.dumps(str(transaction_history)), 200, mimetype="application/json")
     except Exception as e:
         return Response(json.dumps(str(e)), 500, mimetype="application/json")

@@ -7,7 +7,7 @@ from solders.pubkey import Pubkey
 from tronpy.providers import HTTPProvider
 from bs4 import BeautifulSoup
 
-def extract_wallets_and_values(html_text, address, explorer_url):
+def extract_wallets_and_values(html_text, explorer_url):
     # Parse the HTML using BeautifulSoup
     soup = BeautifulSoup(html_text, 'html.parser')
     
