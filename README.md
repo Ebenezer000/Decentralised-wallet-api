@@ -289,7 +289,110 @@
     }
     ```
 
-    ## Supported Chains
+12. Fetch Token Image
+
+    Description: Retrieves the URL of a token image from the Trust Wallet GitHub repository.
+    URL: /fetch_token_image
+    Method: POST
+
+    Request Body:
+
+    ```json
+
+    {
+        "chain": "string",          // Required: The blockchain name (e.g., "ethereum", "binance", "polygon")
+        "contract_address": "string" // Required: The token's contract address
+    }
+    ```
+
+    Responses:
+
+    200 OK:
+
+    ```json
+
+    `"https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x.../logo.png"
+    ```
+    
+    500 Internal Server Error:
+
+    ```json
+    
+        "Token image not found"
+    ```
+
+13. Fetch EVM Transaction History
+
+
+    Description: Fetches the transaction history for a given address from the provided EVM explorer URL.
+    URL: /fetch_history_evm
+    Method: POST
+
+    Request Body:
+
+    ```json
+    {
+        "address": "string",       // Required: The wallet address to fetch history for
+        "explorer": "string"       // Required: The base URL of the EVM explorer
+    }
+    ```
+
+    Responses:
+
+    200 OK:
+
+    ```json
+        [
+            {
+                "transaction_type": "IN/OUT",
+                "transaction_hash": "0x...",
+                "transaction_name": "string",
+                "transaction_date": "string",
+                "transaction_age": "string",
+                "receiving_address": "0x...",
+                "amount": "string",
+                "amount_in_usd": "string",
+                "transaction_url": "https://explorer/tx/0x..."
+            },
+            ...
+        ]
+    ```
+
+    500 Internal Server Error:
+
+    ```json
+        "Error message"
+    ```
+
+    Example Request:
+
+    ```json
+        {
+        "address": "0x1234567890abcdef1234567890abcdef12345678",
+        "explorer": "https://etherscan.io"
+        }
+    ```
+
+    Example Response:
+
+    ```json
+        [
+            {
+                "transaction_type": "IN",
+                "transaction_hash": "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
+                "transaction_name": "Transfer",
+                "transaction_date": "2024-08-01",
+                "transaction_age": "1 day ago",
+                "receiving_address": "0xabcdefabcdefabcdefabcdefabcdefabcdefabcdef",
+                "amount": "10.5 ETH",
+                "amount_in_usd": "$21000",
+                "transaction_url": "https://etherscan.io/tx/0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"
+            },
+            ...
+        ]
+    ```
+
+## Supported Chains
 
 The library supports the following blockchains:
 
