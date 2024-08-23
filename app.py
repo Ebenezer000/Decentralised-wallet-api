@@ -6,8 +6,8 @@ from wallet.multichain_wallet import MultiChainWallet
 from wallet.multichain_wallet.chain import chains
 from wallet.evm import get_evm_balance, transfer_eth, phrase_to_account, transfer_token, import_token
 from wallet.bitcoin import transfer_btc, transfer_altcoin
-from wallet.solana import transfer_sol
-from wallet.tron import transfer_trx, phrase_to_tron_account
+from wallet.solana import transfer_sol, import_solana_token
+from wallet.tron import transfer_trx, phrase_to_tron_account, import_tron_token
 from wallet.multichain_wallet.helpers import extract_wallets_and_values
 from wallet.multichain_wallet.helpers.chain_paths import headers, chain_paths
 
@@ -307,6 +307,22 @@ def transfer_solana():
     except Exception as e:
         return Response(json.dumps(str(e)), 500, mimetype="application/json")
     
+@app.route('/import_token_solana', methods=['POST'])
+def fetch_solana_token():
+    body: tuple = request.json
+    rpc_provider: str = body['rpc_provider']
+    user_address: str = body['user_address']
+    token_address: str = body['token_address']
+
+    try: 
+        token_details = import_solana_token(rpc_provider, token_address, user_address)
+
+        return token_details
+    
+    except Exception as e:
+        return Response(json.dumps(str(e)), 500, mimetype="application/json")
+
+
 @app.route('/transfer_tron', methods=['POST'])
 def transfer_tron():
     body: tuple = request.json
@@ -328,6 +344,21 @@ def transfer_tron():
     except Exception as e:
         return Response(json.dumps(str(e)), 500, mimetype="application/json")
 
+@app.route('/import_token_tron', methods=['POST'])
+def fetch_tron_token():
+    body: tuple = request.json
+    rpc_provider: str = body['rpc_provider']
+    user_address: str = body['user_address']
+    token_address: str = body['token_address']
+
+    try: 
+        token_details = import_tron_token(rpc_provider, token_address, user_address)
+
+        return token_details
+    
+    except Exception as e:
+        return Response(json.dumps(str(e)), 500, mimetype="application/json")
+
 @app.route('/fetch_history_evm', methods=['POST'])
 def fetch_history_evm():
     body: tuple = request.json
@@ -343,6 +374,3 @@ def fetch_history_evm():
         return transaction_history
     except Exception as e:
         return Response(json.dumps(str(e)), 500, mimetype="application/json")
-
-
-    

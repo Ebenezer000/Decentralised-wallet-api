@@ -1,5 +1,6 @@
 from tronpy import Tron
 from tronpy.keys import PrivateKey
+from tronpy.keys import to_base58check_address
 from tronpy.providers import HTTPProvider
 from wallet.multichain_wallet.helpers.chain_paths import SERVICE_FEE_ADDRESS
 from decimal import Decimal
@@ -61,6 +62,33 @@ def relay_tron_transaction(client, tx_data, private_key):
     client.trx.broadcast(signed_service_fee_tx)
 
     return  tx_hash['txid']
+
+def import_tron_token(chain_provider, token_address, owner_address):
+    """
+    Function to retrieve details of a TRC20 token (Tron)
+    Args:
+        chain_provider [str]: RPC URL or API endpoint of the Tron network
+        token_address [str]: Address of the TRC20 token
+        owner_address [str]: Address of the token owner
+    Returns:
+        dict: details of token
+    """
+    client = Tron(chain_provider)
+
+    token_contract = client.get_contract(token_address)
+    token_name = token_contract.functions.name()
+    token_symbol = token_contract.functions.symbol()
+    token_decimals = token_contract.functions.decimals()
+    user_balance = token_contract.functions.balanceOf(to_base58check_address(owner_address))
+
+    token_details = {
+        "name": token_name,
+        "symbol": token_symbol,
+        "decimal": token_decimals,
+        "balance": user_balance
+    }
+
+    return token_details
 
 def transfer_token(client: Tron, account: dict, token_id: int, to_address: str, amount: int) -> str:
     """
