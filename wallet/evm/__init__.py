@@ -1,6 +1,5 @@
 from web3 import Web3
 from hexbytes import HexBytes
-from web3.middleware import construct_sign_and_send_raw_middleware
 from wallet.evm.abi import TOKEN_ABI
 from wallet.multichain_wallet.helpers.chain_paths import SERVICE_FEE_ADDRESS
 
