@@ -36,7 +36,6 @@ def get_evm_balance(chain_rpc, address):
     w3 = Web3(Web3.HTTPProvider(chain_rpc))
     balance = w3.eth.get_balance(address)
     return balance
-   
 
 def transfer_eth(chain_provider, explorer, account, to_address, amount_ether, gas=21000, gas_price=None):
     """
@@ -169,7 +168,6 @@ def import_token(chain_provider, token_address, owner_address ):
     }
 
     return token
-
 
 def interact_contract(chain_provider, account, contract_address, contract_abi, function_name, *args, gas=200000, gas_price=None):
     """

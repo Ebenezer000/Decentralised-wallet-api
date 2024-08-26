@@ -49,7 +49,6 @@ class MultiChainWallet:
             
         return {"address": full_key.address, "private_key": full_key.key.hex(), "balance": balance}
     
-
     def get_tron_account(self, account_index: int = 0) -> dict:
         """
         Get Tron account details.
@@ -122,4 +121,3 @@ class MultiChainWallet:
         
         else:
             return {"address": address, "private_key": private_key}
-        

@@ -235,7 +235,6 @@ def get_token_image_url() -> str:
     else:
         return Response(json.dumps("Token image not found"), 500, mimetype="application/json")
 
-
 ###
 # END EVM API CALS
 ###
@@ -321,7 +320,6 @@ def fetch_solana_token():
     
     except Exception as e:
         return Response(json.dumps(str(e)), 500, mimetype="application/json")
-
 
 @app.route('/transfer_tron', methods=['POST'])
 def transfer_tron():

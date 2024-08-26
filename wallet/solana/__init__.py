@@ -47,7 +47,6 @@ def transfer_sol(seed: str, recipient_address: str, amount_sol: float) -> dict:
 
     return main_txn_signature["result"]
 
-
 async def import_solana_token(chain_provider, token_address, owner_address):
     """
     Function to retrieve details of an SPL token (Solana)
@@ -134,7 +133,6 @@ async def transfer_solana_token(chain_provider, sender_private_key, token_addres
         response = await client.send_transaction(transaction, sender_keypair)
 
     return response['result']
-
 
 def sign_message(seed: str, message: str) -> bytes:
     """
